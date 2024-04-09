@@ -118,8 +118,6 @@ import slugify from 'slugify';
         {{ amenities }}
       </div>
     </div>
-    <!-- Hotel Amenities -->
-    <app-newsletter style="position: relative; top: +240px;"></app-newsletter>
     <app-footer></app-footer>
     <!-- Template End -->
   `,

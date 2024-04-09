@@ -4,7 +4,7 @@ import { HotelDataModel } from '../../store/hotel.model';
 @Component({
   selector: 'app-card',
   template: `
-    <div
+    <!-- <div
       class="card-container"
       [style.background-image]="'url(' + selectedBackgroundPhoto + ')'"
     >
@@ -13,9 +13,23 @@ import { HotelDataModel } from '../../store/hotel.model';
           <h6>{{ hotel?.name }}</h6>
           <p>An amazing journey</p>
         </section>
+        <div class="card-price-container">
         <section class="card-price">
           <span> {{ hotel?.nightlyPrice | currency }}</span> /night
         </section>
+        </div>
+      </div>
+    </div> -->
+    <div>
+      <div>Resim</div>
+      <div>
+        <h6>{{ hotel?.name }}</h6>
+        <span>Hotel Address</span>
+        <span>Degerlendirme</span>
+        <div>
+          
+          <span>Fiyat</span>
+        </div>
       </div>
     </div>
   `,

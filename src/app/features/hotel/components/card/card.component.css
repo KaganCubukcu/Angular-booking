@@ -47,3 +47,7 @@ h6 {
 .card-price span {
   font-size: 24px;
 }
+
+.card-price-container {
+  background-color: red;
+}
