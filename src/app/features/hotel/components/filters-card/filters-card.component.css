@@ -2,33 +2,13 @@
   display: block;
   border-radius: 12px;
   width: 100%;
-
-}
-
-.accommodation-list {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px;
-  box-shadow: #8dd3bb 0 0 10px;
-  border-radius: 12px;
-  margin-bottom: 32px;
-}
-
-.section-container {
-  width: 33%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-top: 5px;
-  padding-bottom: 5px;
 }
 
 .show-places-container {
   display: flex;
   justify-content: space-between;
   padding: 5px;
-  margin-bottom: 32px;
+  margin-bottom: 16px;
 }
 
 .card-container {
@@ -48,54 +28,18 @@
 }
 
 .card-items-container {
-  width: 100%;
   display: flex;
   flex-direction: column;
-  height: 300px;
   padding: 24px;
+  width: 100%;
 }
 
-.card-title-price-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-br {
-  height: 1px;
-  content: "";
-  background: #112211;
-  opacity: 0.25;
-  margin-top: 24px;
-}
-
-.card-title {
-  width: 350px;
-}
-
-.card-price {
-  width: 110px;
-}
-
-.card-price-amount {
-  font-size: 24px;
-  color: #ff8682;
-}
-
-.card-price-unit {
-  color: #ff8682;
-}
-
-.card-address {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  width: 70%;
-}
-
+.card-title-price-container,
+.card-address,
 .card-rating {
   display: flex;
-  gap: 10px;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 .card-rating-value {
@@ -114,6 +58,9 @@ br {
 
 .card-buttons {
   display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-top: auto;
   gap: 16px;
 }
 
@@ -131,62 +78,32 @@ br {
 
 .card-button-view {
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 8px 16px;
-  width: 428px;
+  width: 100%;
   height: 48px;
   background: #8dd3bb;
   border-radius: 4px;
   border: none;
 }
 
-@media only screen and (max-width: 767.98px) {
+@media only screen and (max-width: 1399px) {
   .filters-card-container {
     width: 100%;
   }
   .card-container {
-    height: 700px;
-
-    justify-content: center;
-    align-items: center;
+    height: auto;
     flex-direction: column;
-    margin-bottom: 50px;
   }
   .card-photo img {
     border-radius: 12px 12px 0 0;
     max-height: 300px;
-  }
-  .card-address {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
     width: 100%;
-  }
-  .card-address p {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100%;
-    overflow: hidden;
-  }
-  .card-title-price-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-}
-
-@media only screen and (min-width: 768px) and (max-width: 1399px) {
-  .filters-card-container {
-    width: 92%;
-  }
-  .card-button-view {
-    width: 328px;
   }
   .card-items-container {
-    width: 60%;
+    width: 100%;
   }
-
+  .card-button-view {
+    width: 100%;
+  }
 }
