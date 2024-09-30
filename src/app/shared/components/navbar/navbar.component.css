@@ -1,18 +1,18 @@
 .navbar-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  width: 100vw;
+  background: transparent;
+  width: 100%;
+  padding: 12px;
 }
 
 .navbar-item-container {
   display: flex;
   justify-content: space-around;
-  list-style: none;
   text-align: center;
   align-items: center;
-  padding: 15px;
-  width: 150vw;
+  width: 100%;
 }
 
 .button-section {
@@ -28,14 +28,14 @@
   background-color: transparent;
   padding: 12px;
   border-radius: 8px;
-  border: none;
+  border: 1px solid #000;
   cursor: pointer;
   width: 100px;
-  color: #fff;
 }
 
 .login-button:hover {
-  background-color: #8dd3bb;
+  background-color: #000;
+  color: #fff;
   transition: ease-in-out 0.5s;
 }
 
@@ -48,14 +48,13 @@
 }
 
 .sign-up-button:hover {
-  background-color: #8dd3bb;
+  background-color: #000;
+  color: #fff;
   transition: 0.5s;
 }
 
 .company-name {
-  width: 300px;
-  padding: 10px;
-  color: #fff;
+  color: #000;
   cursor: pointer;
 }
 
@@ -65,88 +64,22 @@
 }
 
 .hotels-button {
-  background-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 5px;
   padding: 10px;
   border: none;
-  color: #fff;
+  color: #000;
+  background: transparent;
 }
 
 .hotels-button:hover {
-  background-color: #8dd3bb;
+  background-color: #000;
+  color: #fff;
   transition: ease-in-out 0.5s;
   border: none;
   border-radius: 8px;
-}
-
-/*Active Classes*/
-
-:host(.active) .navbar-container {
-  padding-left: 50px;
-  padding-right: 70px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(17, 34, 17, 0.05);
-}
-
-:host(.active) .login-button {
-  color: #000;
-}
-
-:host(.active) .company-name {
-  width: 300px;
-  padding: 10px;
-  color: #000;
-}
-
-:host(.active) .sign-up-button {
-  width: 125px;
-  background-color: #8dd3bb;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  color: #fff;
-}
-
-:host(.active) .hotels-button svg {
-  fill: #000;
-}
-
-:host(.active) .hotels-button {
-  background-color: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  padding: 10px;
-  border: none;
-  color: #000;
-}
-.logged-in-container {
-  display: flex;
-  align-items: center;
-  color: #fff;
-  gap: 5px;
-}
-.user-avatar {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  margin-right: 10px;
-  margin-left: 10px;
-  background-size: contain;
-  object-fit: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #8dd3bb;
-  cursor: pointer;
-}
-:host(.active) .logged-in-container {
-  color: #000;
 }
 
 .user-name {
@@ -166,7 +99,7 @@
     height: 100%;
     border: none;
   }
-  .navbar-item-container{
+  .navbar-item-container {
     width: 100%;
   }
   .user-avatar,

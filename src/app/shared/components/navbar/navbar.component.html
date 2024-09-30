@@ -4,7 +4,7 @@
       <button class="hotels-button" (click)="navigateToHotelListing()">
         <svg
           class="bi bi-buildings"
-          fill="white"
+          fill="black"
           height="22"
           viewBox="0 0 16 16"
           width="22"
@@ -30,8 +30,11 @@
       <button class="login-button" routerLink="/login">Login</button>
       <button class="sign-up-button" routerLink="/sign-up">Sign Up</button>
     </li>
+
+    <!-- logged in -->
+
     <ng-template #loggedInTrue>
-      <div class="logged-in-container" [ngClass]="{ active: menuActive }">
+      <div class="logged-in-container">
         <img src="assets/icons/heart.svg" alt="heart" class="heart-img" />
         <span class="user-favourites">Favourites </span>
         <span class="user-avatar" routerLink="/account">{{

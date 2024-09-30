@@ -6,6 +6,10 @@ p {
   padding: 0 !important;
 }
 
+ul {
+  list-style: none;
+}
+
 @media only screen and (max-width: 1199.98px) {
   body {
     margin-left: 0 !important;

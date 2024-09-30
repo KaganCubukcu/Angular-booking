@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 
 export class HeaderComponent {
-  headerTitle = 'Explore, Dream, Discover';
-  headerSubTitle = 'LIVE & TRAVEL';
-  headerDescription = 'Special offers to suit your plan';
+  headerTitle: string = 'Explore, Dream, Discover';
+  headerSubTitle: string = 'LIVE & TRAVEL';
+  headerDescription: string = 'Special offers to suit your plan';
 }
