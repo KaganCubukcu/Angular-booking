@@ -1,5 +1,17 @@
-import { Component, TemplateRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import {
+  Component,
+  TemplateRef,
+  OnInit,
+  HostListener,
+  ElementRef,
+} from '@angular/core';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { select, Store } from '@ngrx/store';
 import { filter, map, Observable, Subject, takeUntil } from 'rxjs';
@@ -9,6 +21,7 @@ import { hotelsSelector } from '../../store/hotels.selectors';
 import { Router } from '@angular/router';
 import slugify from 'slugify';
 import { updateSearchBar } from '../../store/search/search.action';
+import { ChangeDetectorRef } from '@angular/core';
 
 interface GuestsData {
   [key: string]: number;
@@ -19,28 +32,33 @@ interface GuestsData {
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.css'],
 })
-export class SearchBarComponent {
-  // Define a property 'today' as the current date in ISO format
-  today = new Date().toISOString().split('T')[0];
+export class SearchBarComponent implements OnInit {
+  today!: string;
   form: FormGroup;
   hotels$: Observable<HotelDataModel[]>;
   hotelCountry: string[] = [];
   destinationInputFocused = false;
   filteredHotels: HotelDataModel[] = [];
   formSubmitted = false;
-
+  showDestinationSuggestions = false;
   unsubscribe$ = new Subject<void>();
 
   guestsData: GuestsData = {
     rooms: 1,
-    adults: 1,
+    adults: 2,
     children: 0,
   };
 
-  constructor(private readonly fb: FormBuilder, private readonly modalService: NgbModal, private readonly store: Store<AppStateInterface>, private readonly router: Router) {
-    // Initialize the form property using the FormBuilder dependency
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly modalService: NgbModal,
+    private readonly store: Store<AppStateInterface>,
+    private readonly router: Router,
+    private cdr: ChangeDetectorRef,
+    private elementRef: ElementRef
+  ) {
     this.form = this.fb.group({
-      destination: '',
+      destination: ['', Validators.required],
       checkIn: ['', Validators.required],
       checkOut: ['', [Validators.required]],
       roomsGuests: [
@@ -48,10 +66,8 @@ export class SearchBarComponent {
         [Validators.required, this.roomsGuestsValidator.bind(this)],
       ],
     });
-    // Get the checkOut control from the form
     const checkOutControl = this.form.get('checkOut');
     if (checkOutControl) {
-      // Set the validator for the checkOut control using the checkOutValidator method
       checkOutControl.setValidators(this.checkOutValidator.bind(this));
     }
     this.hotels$ = this.store.pipe(select(hotelsSelector));
@@ -61,13 +77,59 @@ export class SearchBarComponent {
     });
   }
 
+  ngOnInit() {
+    this.today = this.formatDate(new Date());
+    this.initForm();
+  }
+
+  onDateChange(controlName: 'checkIn' | 'checkOut') {
+    const control = this.form.get(controlName);
+    if (control) {
+      const date = new Date(control.value);
+      control.setValue(this.formatDate(date), { emitEvent: false });
+    }
+  }
+
+  initForm() {
+    this.form = this.fb.group({
+      destination: ['', Validators.required],
+      checkIn: [this.formatDate(new Date()), Validators.required],
+      checkOut: [
+        this.formatDate(new Date(new Date().setDate(new Date().getDate() + 1))),
+        [Validators.required],
+      ],
+      roomsGuests: [
+        this.formatGuestsData(), // Default değeri burada ayarlıyoruz
+        [Validators.required, this.roomsGuestsValidator.bind(this)],
+      ],
+    });
+    const checkOutControl = this.form.get('checkOut');
+    if (checkOutControl) {
+      checkOutControl.setValidators(this.checkOutValidator.bind(this));
+    }
+  }
+
+  formatGuestsData(): string {
+    return `${this.guestsData['rooms']} Rooms, ${this.guestsData['adults']} Adults, ${this.guestsData['children']} Children`;
+  }
+
+  formatDate(date: Date): string {
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${year}-${month}-${day}`;
+  }
+
   get checkOutControl() {
     return this.form.get('checkOut');
   }
 
-  // Define a method 'openModal' that takes content as an argument
   openModal(content: NgbModalRef | TemplateRef<any>) {
     this.modalService.open(content);
+  }
+
+  openGuestsModal(content: TemplateRef<any>) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   roomsGuestsValidator(control: AbstractControl): ValidationErrors | null {
@@ -111,7 +173,7 @@ export class SearchBarComponent {
 
   updateRoomsGuests() {
     this.form.patchValue({
-      roomsGuests: `${this.guestsData['rooms']} Rooms, ${this.guestsData['adults']} Adults, ${this.guestsData['children']} Children`,
+      roomsGuests: this.formatGuestsData(),
     });
   }
 
@@ -125,8 +187,8 @@ export class SearchBarComponent {
           searchResult: [
             {
               destination,
-              checkIn,
-              checkOut,
+              checkIn: this.formatDateForDisplay(checkIn),
+              checkOut: this.formatDateForDisplay(checkOut),
               roomsGuests,
             },
           ],
@@ -140,21 +202,52 @@ export class SearchBarComponent {
     }
   }
 
+  formatDateForDisplay(dateString: string): string {
+    const [year, month, day] = dateString.split('-');
+    return `${month}/${day}/${year}`;
+  }
+
   selectDestination(country: string) {
     this.form.patchValue({ destination: country });
-    this.destinationInputFocused = false;
+    this.showDestinationSuggestions = false;
+    this.cdr.detectChanges(); // Değişiklikleri hemen yansıtmak için
+  }
+
+  toggleDestinationSuggestions(event: Event) {
+    event.stopPropagation(); // Bu satırı ekleyin
+    this.showDestinationSuggestions = !this.showDestinationSuggestions;
   }
 
   searchHotels(event: Event) {
+    event.stopPropagation(); // Bu satırı ekleyin
     const inputElement = event.target as HTMLInputElement;
     const value = inputElement.value;
-    this.hotels$.pipe(takeUntil(this.unsubscribe$), map((hotels) => hotels.filter((hotel) =>
-      hotel.address.country.toLowerCase().includes(value.toLowerCase())
-    ))).subscribe((filteredHotels) => (this.filteredHotels = filteredHotels));
+    this.hotels$
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        map((hotels) =>
+          hotels.filter((hotel) =>
+            hotel.address.country.toLowerCase().includes(value.toLowerCase())
+          )
+        )
+      )
+      .subscribe((filteredHotels) => {
+        this.filteredHotels = filteredHotels;
+        this.showDestinationSuggestions = true;
+        this.cdr.detectChanges(); // Değişiklikleri hemen yansıtmak için
+      });
   }
+
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: Event) {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.showDestinationSuggestions = false;
+      this.cdr.detectChanges();
+    }
+  }
+
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
 }
-

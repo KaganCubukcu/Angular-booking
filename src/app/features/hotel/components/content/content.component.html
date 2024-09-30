@@ -1,15 +1,18 @@
 <div class="content-container">
-    <h3>Fall into travel</h3>
-    <p>
-        Going somewhere to celebrate this season? Whether you’re going home or
-        somewhere to roam, we’ve got the travel tools to get you to your
-        destination.
-    </p>
-    <div class="content-card-container">
-        <ng-container *ngIf="hotels$ | async as hotels">
-            <ng-container *ngFor="let hotel of hotels | slice : 0 : 4">
-                <app-card [hotel]="hotel" (bookNowClick)="onHotelBookNowClick($event)"></app-card>
-            </ng-container>
-        </ng-container>
-    </div>
+  <h2 class="content-title">Fall into travel</h2>
+  <p class="content-description">
+    Going somewhere to celebrate this season? Whether you’re going home or
+    somewhere to roam, we’ve got the travel tools to get you to your
+    destination.
+  </p>
+  <div class="content-card-container">
+    <ng-container *ngIf="hotels$ | async as hotels">
+      <ng-container *ngFor="let hotel of hotels | slice : 0 : 4">
+        <app-card
+          [hotel]="hotel"
+          (bookNowClick)="onHotelBookNowClick($event)"
+        ></app-card>
+      </ng-container>
+    </ng-container>
+  </div>
 </div>

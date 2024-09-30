@@ -12,6 +12,7 @@ import { StoreModule } from '@ngrx/store';
 import { hotelReducer } from './store/hotels.reducers';
 import { localStorageSync } from 'ngrx-store-localstorage';
 import { searchBarReducer } from './store/search/search.reducers';
+import { AdventureAwaitsComponent } from './components/adventure-awaits/adventure-awaits.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { searchBarReducer } from './store/search/search.reducers';
     FiltersCardComponent,
     HotelsFiltersComponent,
     SearchBarComponent,
+    AdventureAwaitsComponent,
   ],
   imports: [
     CommonModule,
@@ -41,6 +43,7 @@ import { searchBarReducer } from './store/search/search.reducers';
     ContentComponent,
     FiltersCardComponent,
     HotelsFiltersComponent,
+    AdventureAwaitsComponent,
   ],
 })
 export class HotelModule {}

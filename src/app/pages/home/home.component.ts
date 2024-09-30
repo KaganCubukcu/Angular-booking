@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
     <div class="home-container">
       <app-header></app-header>
       <app-search-bar style="position: relative; top: -140px;"></app-search-bar>
+      <!-- <app-adventure-awaits></app-adventure-awaits> -->
       <app-content></app-content>
       <app-footer></app-footer>
     </div>

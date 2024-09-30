@@ -2,7 +2,6 @@ footer {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  background-color: #8dd3bb;
   margin-top: 100px;
   padding: 100px 45px 45px;
 }
@@ -36,7 +35,7 @@ h2 {
   font-weight: 700;
 }
 
-img  {
+img {
   cursor: pointer;
 }
 @media only screen and (max-width: 1199.98px) {
