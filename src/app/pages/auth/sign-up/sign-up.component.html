@@ -1,65 +1,35 @@
 <div class="signup-container">
-  <button class="back-button" (click)="backToHome()">&#8592;</button>
   <div class="signup-image"></div>
   <form class="form-container" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-    <h1 class="logo">Bookify</h1>
-
     <h3 class="login-title">Sign up</h3>
-    <p class="login-description">
-      Let’s get you all set up so you can access your personal account.
-    </p>
+    <p class="login-description">Let’s get you all set up so you can access your personal account.</p>
 
     <section class="input-container">
       <div class="form-row">
-        <input
-          type="text"
-          placeholder="First Name"
-          formControlName="firstName"
-        />
+        <input type="text" placeholder="First Name" formControlName="firstName" />
         <input type="text" placeholder="Last Name" formControlName="lastName" />
       </div>
       <div class="form-row">
         <input type="email" placeholder="Email" formControlName="email" />
-        <input
-          type="tel"
-          placeholder="Phone Number"
-          formControlName="phoneNumber"
-          (keyup)="formatPhoneNumber()"
-        />
+        <input type="tel" placeholder="Phone Number" formControlName="phoneNumber" (keyup)="formatPhoneNumber()" />
       </div>
       <div class="form-col">
-        <input
-          type="password"
-          placeholder="Password"
-          formControlName="password"
-        />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          formControlName="confirmPassword"
-        />
+        <input type="password" placeholder="Password" formControlName="password" />
+        <input type="password" placeholder="Confirm Password" formControlName="confirmPassword" />
       </div>
     </section>
-    <div
-      class="error-messages"
-      *ngIf="signUpForm.errors && (signUpForm.touched || signUpForm.dirty)"
-    >
-      <span>{{ getErrorMessage("firstName") }}</span>
-      <span>{{ getErrorMessage("lastName") }}</span>
-      <span>{{ getErrorMessage("email") }}</span>
-      <span>{{ getErrorMessage("phoneNumber") }}</span>
-      <span>{{ getErrorMessage("password") }}</span>
+    <div class="error-messages" *ngIf="signUpForm.errors && (signUpForm.touched || signUpForm.dirty)">
+      <span>{{ getErrorMessage('firstName') }}</span>
+      <span>{{ getErrorMessage('lastName') }}</span>
+      <span>{{ getErrorMessage('email') }}</span>
+      <span>{{ getErrorMessage('phoneNumber') }}</span>
+      <span>{{ getErrorMessage('password') }}</span>
       <span>{{ confirmPasswordError }}</span>
-      <span *ngIf="signUpForm.errors?.['passwordMismatch']"
-        >* Passwords do not match</span
-      >
+      <span *ngIf="signUpForm.errors?.['passwordMismatch']">* Passwords do not match</span>
     </div>
     <section class="terms">
       <input type="checkbox" />
-      <label
-        >I agree to all <span>Terms </span>and
-        <span> Privacy Policies </span></label
-      >
+      <label>I agree to all <span>Terms </span>and <span> Privacy Policies </span></label>
     </section>
 
     <section class="button-container">

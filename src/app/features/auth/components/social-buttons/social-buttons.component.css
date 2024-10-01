@@ -7,7 +7,7 @@
 
 .or-container::before,
 .or-container::after {
-  content: "";
+  content: '';
   flex-grow: 1;
   height: 1px;
   background: #112211;
@@ -29,9 +29,9 @@
 
 .social-buttons button {
   padding: 16px 24px;
-  width: 160px;
+  width: 100%;
   height: 56px;
-  border: 1px solid #8dd3bb;
+  border: 1px solid #000;
   border-radius: 4px;
   background: none;
 }
