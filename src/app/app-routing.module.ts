@@ -8,6 +8,7 @@ import { AccountComponent } from './pages/account/account.component';
 import { HotelDetailsComponent } from './pages/hotel-details/hotel-details.component';
 import { PaymentComponent } from './pages/payment/payment.component';
 import { SuccessPageComponent } from './pages/payment/success-page/success-page.component';
+import { ChangelogComponent } from './features/changelog/changelog.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,10 @@ const routes: Routes = [
   {
     path: 'success',
     component: SuccessPageComponent,
+  },
+  {
+    path: 'changelog',
+    component: ChangelogComponent,
   },
 ];
 

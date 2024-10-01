@@ -21,6 +21,7 @@ import { HotelDetailsComponent } from './pages/hotel-details/hotel-details.compo
 import { PaymentComponent } from './pages/payment/payment.component';
 import { SuccessPageComponent } from './pages/payment/success-page/success-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ChangelogComponent } from './features/changelog/changelog.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HotelDetailsComponent,
     PaymentComponent,
     SuccessPageComponent,
+    ChangelogComponent,
   ],
   imports: [
     AccountModule,
