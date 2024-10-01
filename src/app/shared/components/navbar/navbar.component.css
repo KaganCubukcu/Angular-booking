@@ -4,47 +4,53 @@
   align-items: center;
   background: transparent;
   width: 100%;
-  padding: 12px;
+  padding: 12px 24px;
 }
 
 .navbar-item-container {
   display: flex;
   justify-content: space-around;
-  text-align: center;
   align-items: center;
   width: 100%;
 }
 
 .button-section {
   display: flex;
-  justify-content: center;
-  width: 177px;
-  height: 48px;
-  gap: 5px;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.changelog-button,
+.login-button,
+.sign-up-button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.changelog-button {
+  background-color: transparent;
   border: none;
 }
 
 .login-button {
   background-color: transparent;
-  padding: 12px;
-  border-radius: 8px;
   border: 1px solid #000;
-  cursor: pointer;
-  width: 100px;
 }
 
+.sign-up-button {
+  background-color: #000;
+  color: #fff;
+  border: none;
+}
 .login-button:hover {
   background-color: #000;
   color: #fff;
   transition: ease-in-out 0.5s;
-}
-
-.sign-up-button {
-  width: 125px;
-  background-color: #fff;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
 }
 
 .sign-up-button:hover {
@@ -54,36 +60,50 @@
 }
 
 .company-name {
+  flex: 1;
+  text-align: center;
   color: #000;
   cursor: pointer;
 }
 
+.company-name h3 {
+  margin: 0;
+  font-size: 24px;
+}
+
 .hotels-section {
-  width: 190px;
-  padding-left: 10px;
+  flex: 1;
 }
 
 .hotels-button {
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 5px;
-  padding: 10px;
+  padding: 8px 12px;
   border: none;
-  color: #000;
   background: transparent;
+  font-size: 14px;
+  cursor: pointer;
 }
 
 .hotels-button:hover {
-  background-color: #000;
-  color: #fff;
-  transition: ease-in-out 0.5s;
-  border: none;
+  background-color: rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+  color: #000;
 }
 
 .user-name {
   cursor: pointer;
+}
+
+.changelog-button:hover {
+  background-color: rgba(141, 211, 187, 0.1);
+}
+
+.changelog-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
 }
 
 @media only screen and (max-width: 575.98px) {
@@ -105,6 +125,9 @@
   .user-avatar,
   .user-favourites,
   .heart-img {
+    display: none;
+  }
+  .changelog-button {
     display: none;
   }
 }
