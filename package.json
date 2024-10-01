@@ -1,6 +1,6 @@
 {
   "name": "mean-stack-ngrx-angular-booking",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

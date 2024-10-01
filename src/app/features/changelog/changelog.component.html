@@ -1,0 +1,12 @@
+<div class="changelog-container">
+  <h1>Changelog</h1>
+  <div class="changelog-list">
+    <div class="changelog-item" *ngFor="let changelog of changelog">
+      <h2>{{ changelog.version }}</h2>
+      <p>{{ changelog.date }}</p>
+      <ul>
+        <li *ngFor="let change of changelog.changes">{{ change }}</li>
+      </ul>
+    </div>
+  </div>
+</div>
