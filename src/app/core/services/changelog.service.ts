@@ -8,13 +8,13 @@ export class ChangelogService {
   private changelog: Changelog[] = [
     {
       version: '1.0.0',
-      date: '2024-02-01',
+      date: '2023-02-01',
       changes: ['Initial release'],
     },
     {
-      version: '1.0.1',
-      date: '2024-02-02',
-      changes: ['Added new features'],
+      version: '2.0.0',
+      date: '2024-10-01',
+      changes: ['New changelog page added', 'Navbar design updated', 'Header design updated'],
     },
   ];
 
