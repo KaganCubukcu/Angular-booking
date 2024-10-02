@@ -15,6 +15,7 @@
 .form-row {
   display: flex;
   gap: 24px;
+  margin-bottom: 0;
 }
 
 .form-col {
@@ -23,7 +24,7 @@
 }
 
 .signup-image {
-  background-image: url("https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1025&q=80");
+  background-image: url('https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1025&q=80');
   background-position: center;
   background-size: cover;
   border-radius: 30px;
@@ -54,11 +55,12 @@
 .input-container {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  position: relative;
   justify-content: center;
   gap: 24px;
-  width: 100%;
-  margin-top: 35px;
-  margin-bottom: 55px;
+  margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 .input-container input {
@@ -95,7 +97,8 @@
   margin-bottom: 30px;
   padding: 8px 16px;
   gap: 4px;
-  background: #8dd3bb;
+  background: #000;
+  color: #fff;
   border-radius: 4px;
   border: none;
   height: 48px;
@@ -104,19 +107,17 @@
 span {
   color: #ff8682;
 }
+
 .error-messages {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
+  position: absolute;
+  left: 0;
+  bottom: -20px;
+  font-size: 12px;
+  color: #ff8682;
+  width: 100%;
+  text-align: left;
 }
-.back-button {
-  font-size: 24px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: start;
-}
+
 @media only screen and (max-width: 1199.98px) {
   .signup-container {
     display: flex;
@@ -192,6 +193,13 @@ span {
     display: flex;
     justify-content: center;
   }
+  .form-row,
+  .form-col {
+    margin-bottom: 30px;
+  }
+  .error-messages {
+    bottom: -25px;
+  }
 }
 @media only screen and (min-width: 767px) and (max-width: 1279px) {
   .signup-container {
@@ -202,11 +210,7 @@ span {
     gap: 0;
     height: 100vh;
   }
-  .back-button {
-    position: absolute;
-    left: 20px;
-    top: 20px;
-  }
+
   .form-container {
     width: 100%;
     display: flex;
@@ -221,5 +225,26 @@ span {
   }
   .logo {
     margin-bottom: 32px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .input-container {
+    margin-bottom: 25px;
+  }
+
+  .error-messages {
+    bottom: -18px;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1279px) {
+  .form-row .input-container {
+    width: calc(50% - 12px);
   }
 }
