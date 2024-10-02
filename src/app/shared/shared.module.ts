@@ -10,6 +10,6 @@ import { FormErrorDirective } from './directives/form-error.directive';
 @NgModule({
   declarations: [HeaderComponent, NavbarComponent, FooterComponent, LogoPipe, FormErrorDirective],
   imports: [CommonModule, RouterModule],
-  exports: [HeaderComponent, NavbarComponent, FooterComponent, LogoPipe],
+  exports: [HeaderComponent, NavbarComponent, FooterComponent, LogoPipe, FormErrorDirective],
 })
 export class SharedModule {}
