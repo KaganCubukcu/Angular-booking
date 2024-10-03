@@ -18,33 +18,37 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit() {
     this.store.select(AuthSelectors.signUpUserSelector).subscribe((signUpUser) => {
-        if (signUpUser) {
-          this.router.navigate(['/login']);
-        }
-      });
-    this.signUpForm = this.fb.group({
-        firstName: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(10), Validators.pattern('^[a-zA-Z]*')])],
-        lastName: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(10), Validators.pattern('^[a-zA-ZığüşöçİĞÜŞÖÇ]*')])],
-        phoneNumber: ['', Validators.compose([Validators.required, Validators.pattern('^\\d{11}'), Validators.minLength(11), Validators.maxLength(11)])],
-        email: ['', Validators.compose([Validators.required, Validators.email])],
-        password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+      if (signUpUser) {
+        this.router.navigate(['/login']);
+      }
+    });
+    this.signUpForm = this.fb.group(
+      {
+        firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10), Validators.pattern('^[a-zA-Z]*$')]],
+        lastName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10), Validators.pattern('^[a-zA-ZığüşöçİĞÜŞÖÇ]*$')]],
+        phoneNumber: ['', [Validators.required, Validators.pattern('^\\d{11}$')]],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', Validators.required],
-      }, { validators: this.passwordMatchValidator });
+      },
+      { validators: this.passwordMatchValidator }
+    );
   }
 
   passwordMatchValidator(formGroup: FormGroup) {
     const password = formGroup.get('password')?.value;
     const confirmPassword = formGroup.get('confirmPassword')?.value;
+
+    if (!password || !confirmPassword) return null;
+
     return password === confirmPassword ? null : { mismatchedPasswords: true };
   }
 
   onSubmit() {
-    if (this.signUpForm.invalid) return;    
+    if (this.signUpForm.invalid) return;
 
-    const {firstName, lastName, email, phoneNumber, password} = this.signUpForm.value;
-    this.store.dispatch(
-      AuthActions.signUp({ firstName, lastName, email, phoneNumber, password })
-    );
+    const { firstName, lastName, email, phoneNumber, password } = this.signUpForm.value;
+    this.store.dispatch(AuthActions.signUp({ firstName, lastName, email, phoneNumber, password }));
   }
 
   formatPhoneNumber() {
@@ -55,28 +59,5 @@ export class SignUpComponent implements OnInit {
       phoneNumber = '0' + phoneNumber;
     }
     this.signUpForm.get('phoneNumber')?.setValue(phoneNumber);
-  }
-
-  backToHome() {
-    this.router.navigate(['/']);
-  }
-
-  getErrorMessage(controlName: string): string {
-    const control = this.signUpForm.get(controlName);
-    if (control?.errors) {
-      if (control.errors['required']) return `* ${controlName} is required`;
-      if (control.errors['minlength']) return `* ${controlName} must be at least ${control.errors['minlength'].requiredLength} characters`;
-      if (control.errors['maxlength']) return `* ${controlName} must be at most ${control.errors['maxlength'].requiredLength} characters`;
-      if (control.errors['pattern']) return `* ${controlName} must contain only letters`;
-      if (control.errors['email']) return '* Email is invalid';
-    }
-    return '';
-  }
-
-  get confirmPasswordError(): string {
-    const confirmPasswordControl = this.signUpForm.get('confirmPassword');
-    if (confirmPasswordControl?.errors?.['required']) return '* Confirm password is required';
-    if (confirmPasswordControl?.value !== this.signUpForm.get('password')?.value) return '* Passwords do not match';
-    return '';
   }
 }
