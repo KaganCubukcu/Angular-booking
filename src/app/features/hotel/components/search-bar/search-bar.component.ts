@@ -1,17 +1,5 @@
-import {
-  Component,
-  TemplateRef,
-  OnInit,
-  HostListener,
-  ElementRef,
-} from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  AbstractControl,
-  ValidationErrors,
-} from '@angular/forms';
+import { Component, TemplateRef, OnInit, HostListener, ElementRef } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { select, Store } from '@ngrx/store';
 import { filter, map, Observable, Subject, takeUntil } from 'rxjs';
@@ -61,10 +49,7 @@ export class SearchBarComponent implements OnInit {
       destination: ['', Validators.required],
       checkIn: ['', Validators.required],
       checkOut: ['', [Validators.required]],
-      roomsGuests: [
-        '',
-        [Validators.required, this.roomsGuestsValidator.bind(this)],
-      ],
+      roomsGuests: ['', [Validators.required, this.roomsGuestsValidator.bind(this)]],
     });
     const checkOutControl = this.form.get('checkOut');
     if (checkOutControl) {
@@ -94,14 +79,8 @@ export class SearchBarComponent implements OnInit {
     this.form = this.fb.group({
       destination: ['', Validators.required],
       checkIn: [this.formatDate(new Date()), Validators.required],
-      checkOut: [
-        this.formatDate(new Date(new Date().setDate(new Date().getDate() + 1))),
-        [Validators.required],
-      ],
-      roomsGuests: [
-        this.formatGuestsData(), // Default değeri burada ayarlıyoruz
-        [Validators.required, this.roomsGuestsValidator.bind(this)],
-      ],
+      checkOut: [this.formatDate(new Date(new Date().setDate(new Date().getDate() + 1))), [Validators.required]],
+      roomsGuests: [this.formatGuestsData(), [Validators.required, this.roomsGuestsValidator.bind(this)]],
     });
     const checkOutControl = this.form.get('checkOut');
     if (checkOutControl) {
@@ -135,9 +114,7 @@ export class SearchBarComponent implements OnInit {
   roomsGuestsValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
     if (value) {
-      const [rooms, adults, children] = value
-        .split(',')
-        .map((val: any) => parseInt(val));
+      const [rooms, adults, children] = value.split(',').map((val: any) => parseInt(val));
       if (rooms > 0 && adults > 0 && children >= 0) {
         return null;
       }
@@ -151,7 +128,6 @@ export class SearchBarComponent implements OnInit {
       const checkInDate = new Date(checkInControl.value);
       const checkOutDate = new Date(control.value);
       if (checkOutDate <= checkInDate) {
-        console.log('Invalid check-out date');
         return { invalidCheckOutDate: true };
       }
     }
@@ -225,16 +201,12 @@ export class SearchBarComponent implements OnInit {
     this.hotels$
       .pipe(
         takeUntil(this.unsubscribe$),
-        map((hotels) =>
-          hotels.filter((hotel) =>
-            hotel.address.country.toLowerCase().includes(value.toLowerCase())
-          )
-        )
+        map((hotels) => hotels.filter((hotel) => hotel.address.country.toLowerCase().includes(value.toLowerCase())))
       )
       .subscribe((filteredHotels) => {
         this.filteredHotels = filteredHotels;
         this.showDestinationSuggestions = true;
-        this.cdr.detectChanges(); // Değişiklikleri hemen yansıtmak için
+        this.cdr.detectChanges();
       });
   }
 

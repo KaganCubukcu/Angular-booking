@@ -38,7 +38,6 @@ export class HotelDetailsComponent implements OnInit {
       this.store.select('hotels').subscribe((state) => {
         this.hotel = state.hotels.find((h) => slugify(h.name) === slug);
         this.categories = this.hotel?.amenities || [];
-        console.log(this.hotel);
       });
     });
   }
@@ -50,7 +49,6 @@ export class HotelDetailsComponent implements OnInit {
         hotelName: this.hotel.name,
         roomPrice: this.hotel.nightlyPrice,
       };
-      console.log('Booking data:', bookingData);
       this.router.navigate(['/payment']);
     }
   }
