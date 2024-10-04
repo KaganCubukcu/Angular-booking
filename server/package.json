@@ -1,6 +1,6 @@
 {
   "name": "angular-booking-server",
-  "version": "0.8.4",
+  "version": "0.9.0",
   "description": "mongoDB backend for angular booking website",
   "main": "src/app.js",
   "scripts": {
