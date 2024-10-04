@@ -1,113 +1,63 @@
-<!-- Hotel Details -->
-<div class="hotel-details-container">
-  <div class="hotel-info-container">
-    <div class="hotel-title">
-      <h3 class="hotel-title-text">{{ hotel?.name }}</h3>
+<div class="container" *ngIf="hotel">
+  <h1>{{ hotel.name }}</h1>
+  <div class="rating">
+    <div class="stars">
+      <i *ngFor="let star of [1, 2, 3, 4, 5]" class="bi bi-star-fill"></i>
     </div>
-    <div class="address-container">
-      <div>
-        <img src="assets/icons/location.svg" alt="location-icon" />
-      </div>
-      <p>
-        {{ hotel?.address?.streetAddress }}, {{ hotel?.address?.city }},
-        {{ hotel?.address?.country }}
-      </p>
-    </div>
-    <div class="hotel-title-and-rating">
-      <div class="rating">
-        <span>{{ hotel?.rating }}</span>
-      </div>
-      <span>
-        <strong>Very Good</strong>
-        371 reviews
-      </span>
+    <span class="review-count">{{ hotel.rating }} (1,234 reviews)</span>
+  </div>
+
+  <div class="image-gallery">
+    <img [src]="hotel.photos[currentImageIndex]" [alt]="'Hotel image ' + (currentImageIndex + 1)" class="main-image" />
+    <button class="nav-button prev" (click)="prevImage()">
+      <i class="bi bi-chevron-left"></i>
+    </button>
+    <button class="nav-button next" (click)="nextImage()">
+      <i class="bi bi-chevron-right"></i>
+    </button>
+    <div class="image-indicators">
+      <div *ngFor="let photo of hotel.photos; let i = index" class="indicator" [class.active]="i === currentImageIndex"></div>
     </div>
   </div>
-  <div class="button-container">
-    <div class="price-container">
-      <strong>{{ hotel?.nightlyPrice | currency }}</strong
-      >/night
+
+  <div class="content">
+    <div class="hotel-info">
+      <h2>About this hotel</h2>
+      <p>{{ hotel.overview }}</p>
+      <h3>Amenities</h3>
+      <div class="amenities-grid">
+        <div class="amenity" *ngFor="let amenity of categories">
+          <i class="bi bi-check-circle"></i>
+          <span>{{ amenity }}</span>
+        </div>
+      </div>
     </div>
-    <div class="buttons-container">
-      <button class="button-small">
-        <img src="assets/icons/heart.svg" alt="heart-icon" />
-      </button>
-      <button class="button-small">
-        <img src="assets/icons/share.svg" alt="share-icon" />
-      </button>
-      <button class="button-book" (click)="scrollToRoomsHeader()">
-        Book now
-      </button>
+    <div class="booking-form">
+      <h3>Book Your Stay</h3>
+      <form [formGroup]="bookingForm" (ngSubmit)="bookRoom()">
+        <div class="form-group">
+          <label for="checkIn">Check-in</label>
+          <input id="checkIn" type="date" formControlName="checkIn" />
+        </div>
+        <div class="form-group">
+          <label for="checkOut">Check-out</label>
+          <input id="checkOut" type="date" formControlName="checkOut" />
+        </div>
+        <div class="form-group">
+          <label for="guests">Number of Guests</label>
+          <select id="guests" formControlName="guests">
+            <option value="">Select number of guests</option>
+            <option value="1">1 Guest</option>
+            <option value="2">2 Guests</option>
+            <option value="3">3 Guests</option>
+            <option value="4">4 Guests</option>
+          </select>
+        </div>
+        <div class="form-footer">
+          <div class="price">{{ hotel.nightlyPrice | currency : 'USD' : 'symbol' : '1.0-0' }}<span>/night</span></div>
+          <button type="submit" [disabled]="!bookingForm.valid">Book Now</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
-<!-- Hotel Details -->
-<!-- Hotel Photos -->
-<div class="hotel-photo-container">
-  <img alt="" class="big-image" [src]="hotel?.photos?.[0]" />
-  <div class="small-images">
-    <img alt="" class="img" [src]="hotel?.photos?.[1]" />
-    <img alt="" class="img-top-right" [src]="hotel?.photos?.[2]" />
-    <img alt="" class="img" [src]="hotel?.photos?.[3]" />
-    <img alt="" class="img-top-left" [src]="hotel?.photos?.[4]" />
-  </div>
-</div>
-<!-- Hotel Photos -->
-<!-- Hotel Overview -->
-<div class="hotel-overview">
-  <div class="overview-frame">
-    <h3 class="overview-title">Overview</h3>
-    <p class="overview-description">
-      {{ hotel?.overview }}
-    </p>
-  </div>
-  <div class="rating-container">
-    <div class="rating-box">
-      <p class="rating-score">{{ hotel?.rating }}</p>
-      <div class="rating-info">
-        <span class="rating-text">
-          <strong>Very good</strong>
-        </span>
-        <p class="rating-count">371 reviews</p>
-      </div>
-    </div>
-    <div *ngFor="let category of categories" class="rating-category">
-      <div class="stars">
-        <img src="assets/icons/Stars.svg" alt="stars" />
-      </div>
-      <p>{{ category }}</p>
-    </div>
-  </div>
-</div>
-<!-- Hotel Overview -->
-<hr />
-<div class="avaiable-rooms-container">
-  <div class="rooms-header" #roomsHeader>
-    <h3>Avaiable Rooms</h3>
-  </div>
-  <div *ngFor="let room; in: hotel?.rooms" class="rooms-details-container">
-    <div class="rooms-name">
-      <img [src]="hotel?.photos?.[0]" alt="" />
-      <span>{{ room.name }}</span>
-    </div>
-    <div class="rooms-price">
-      <span>{{ room.price | currency }} </span>/night
-      <button (click)="bookRoom(room)">Book now</button>
-    </div>
-  </div>
-</div>
-<hr />
-<!-- Hotel Overview -->
-<!-- Hotel Amenities -->
-<div class="section-container">
-  <div class="amenities-container">
-    <h3 class="amenities-title">Amenities</h3>
-    <div class="amenities-grid">
-      <div *ngFor="let amenity of hotel?.amenities" class="amenity-item">
-        <span class="amenity-icon">&#10003;</span>
-        <span class="amenity-text">{{ amenity }}</span>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Hotel Amenities -->
