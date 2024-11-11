@@ -16,6 +16,17 @@ export class ChangelogService {
       date: '2024-10-01',
       changes: ['New changelog page added', 'Navbar design updated', 'Header design updated'],
     },
+    {
+      version: '2.2.1',
+      date: '2024-11-11',
+      changes: [
+        'Modernized footer design with improved mobile responsiveness',
+        'Updated footer layout and spacing',
+        'Enhanced footer social media icons',
+        'Improved footer section organization',
+        'Added responsive collapsible sections for mobile view',
+      ],
+    },
   ];
 
   getChangelog(): Changelog[] {

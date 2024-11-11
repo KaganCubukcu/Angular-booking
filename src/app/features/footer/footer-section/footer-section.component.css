@@ -1,0 +1,24 @@
+.footer-section h3 {
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.footer-section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.footer-section li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+  color: #374151;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.footer-section a:hover {
+  color: #111827;
+  text-decoration: underline;
+}
