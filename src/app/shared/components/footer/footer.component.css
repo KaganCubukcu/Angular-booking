@@ -1,59 +1,86 @@
-footer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-top: 100px;
-  padding: 100px 45px 45px;
+.footer {
+  background-color: #a7f3d0;
+  padding: 2rem 1rem;
 }
 
-.footer-section {
-  flex-basis: calc(20% - 20px);
-  margin: 10px;
+.footer-container {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+/* Brand and Social */
+.brand-social {
+  margin-bottom: 2rem;
   text-align: center;
 }
 
-.icon-container {
-  padding: 10px;
+.brand-title {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.social-links {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 12px;
+  gap: 1rem;
 }
 
-ul {
-  list-style: none;
+.social-link {
+  color: #374151;
+}
+
+.social-link:hover {
+  color: #111827;
+}
+
+.social-icon {
+  font-size: 1.5rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
   padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
-li {
-  margin: 15px 0;
-  cursor: pointer;
+/* Desktop Layout */
+.desktop-layout {
+  display: none;
 }
 
-h2 {
-  font-size: 16px;
-  font-weight: 700;
+/* Mobile Layout */
+.mobile-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-img {
-  cursor: pointer;
-}
-@media only screen and (max-width: 1199.98px) {
-  footer {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    background-color: #8dd3bb;
-    margin-top: 100px;
+/* Responsive Design */
+@media (min-width: 768px) {
+  .footer {
+    padding: 2rem 1.5rem;
   }
-  .footer-section {
+
+  .desktop-layout {
     display: grid;
-    text-align: center;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
   }
-  .company-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+
+  .mobile-layout {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer {
+    padding: 2rem;
   }
 }
