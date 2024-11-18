@@ -1,25 +1,21 @@
 .navbar-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: transparent;
+  justify-content: center;
   width: 100%;
-  padding: 12px 24px;
+  padding-top: 4px;
 }
-
-.navbar-item-container {
+.navbar-container ul {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
+  justify-content: space-between;
+  width: 75vw;
+  padding: 4px;
 }
 
 .button-section {
   display: flex;
-  align-items: center;
+  justify-content: end;
   gap: 10px;
-  flex: 1;
-  justify-content: flex-end;
+  width: 25vw;
 }
 
 .changelog-button,
@@ -47,39 +43,32 @@
   color: #fff;
   border: none;
 }
+
 .login-button:hover {
   background-color: #000;
   color: #fff;
   transition: ease-in-out 0.5s;
 }
 
-.sign-up-button:hover {
-  background-color: #000;
-  color: #fff;
-  transition: 0.5s;
-}
-
 .company-name {
-  flex: 1;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25vw;
   color: #000;
   cursor: pointer;
 }
 
-.company-name h3 {
-  margin: 0;
-  font-size: 24px;
-}
-
 .hotels-section {
-  flex: 1;
-}
-
-.hotels-button {
+  width: 25vw;
   display: flex;
   align-items: center;
+}
+
+.find-hotels-button {
+  display: block;
   gap: 5px;
-  padding: 8px 12px;
+  padding: 8px;
   border: none;
   background: transparent;
   font-size: 14px;
@@ -94,16 +83,6 @@
 
 .user-name {
   cursor: pointer;
-}
-
-.changelog-button:hover {
-  background-color: rgba(141, 211, 187, 0.1);
-}
-
-.changelog-icon {
-  width: 16px;
-  height: 16px;
-  margin-right: 5px;
 }
 
 @media only screen and (max-width: 575.98px) {
