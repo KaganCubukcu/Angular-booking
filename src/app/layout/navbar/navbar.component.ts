@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   loggedInUser$ = this.store.select(selectUser);
   firstName = '';
   menuActive = false;
-  
+
   private readonly unsubscribe$ = new Subject<void>();
 
   constructor(

@@ -1,6 +1,8 @@
-import { SearchBarDataModel } from 'src/app/features/hotel/store/search/search.model';
+import { SearchState } from '../../features/hotel/store/search/search.model';
+import { ErrorState } from '../../features/hotel/store/hotel.model';
 
 export interface SearchStateInterface {
-  searchResult: SearchBarDataModel[];
-  error: string | null;
+  search: SearchState;
+  isSearching: boolean;
+  error: ErrorState | null;
 }

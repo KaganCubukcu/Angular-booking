@@ -1,9 +1,13 @@
 import { EntityState } from '@ngrx/entity';
 
 export interface Room {
+  id?: string;
   name: string;
   description: string;
   price: number;
+  capacity?: number;
+  amenities?: string[];
+  photos?: string[];
 }
 
 export interface Address {
@@ -11,6 +15,7 @@ export interface Address {
   city: string;
   state: string;
   country: string;
+  zipCode?: string;
 }
 
 export interface Location {
@@ -31,12 +36,15 @@ export interface HotelDataModel {
   accommodationType: string;
   photos: string[];
   rooms: Room[];
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface ErrorState {
   message: string;
   code?: string;
   timestamp?: Date;
+  details?: any;
 }
 
 export interface HotelsStateInterface extends EntityState<HotelDataModel> {

@@ -47,6 +47,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     this.initializeRoomDetails();
     this.initializeUserDetails();
     this.initializeSearchDetails();
+    this.initializeHotelDetails();
   }
 
   ngOnDestroy(): void {
@@ -55,12 +56,11 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   private initializeRoomDetails(): void {
-    const storedHotelName = localStorage.getItem('hotelName');
     const storedRoomName = localStorage.getItem('roomName');
     const storedRoomPrice = localStorage.getItem('roomPrice');
     const storedRoomDescription = localStorage.getItem('roomDescription');
 
-    if (!storedHotelName || !storedRoomName || !storedRoomPrice) {
+    if (!storedRoomName || !storedRoomPrice) {
       this.router.navigate(['/hotels']);
       return;
     }
@@ -70,21 +70,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
       price: Number(storedRoomPrice),
       description: storedRoomDescription || '',
     };
-
-    this.store.select('hotels')
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (state) => {
-          this.hotel = state.hotels.find((h) => h.name === storedHotelName);
-          if (!this.hotel) {
-            this.router.navigate(['/hotels']);
-          }
-        },
-        error: (error) => {
-          console.error('Error fetching hotel details:', error);
-          this.router.navigate(['/hotels']);
-        }
-      });
   }
 
   private initializeUserDetails(): void {
@@ -120,6 +105,31 @@ export class PaymentComponent implements OnInit, OnDestroy {
         },
         error: (error) => {
           console.error('Error fetching search details:', error);
+        }
+      });
+  }
+
+  private initializeHotelDetails(): void {
+    const storedHotelName = localStorage.getItem('selectedHotel');
+    if (!storedHotelName) {
+      this.router.navigate(['/hotels']);
+      return;
+    }
+
+    this.store.select(state => state.hotels)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (state) => {
+          const hotel = Object.values(state.entities).find(h => h?.name === storedHotelName);
+          if (!hotel) {
+            this.router.navigate(['/hotels']);
+            return;
+          }
+          this.hotel = hotel;
+        },
+        error: (error) => {
+          console.error('Error fetching hotel details:', error);
+          this.router.navigate(['/hotels']);
         }
       });
   }
