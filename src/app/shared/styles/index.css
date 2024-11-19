@@ -1,0 +1,5 @@
+/* Import all global styles */
+@import './forms.css';
+@import './buttons.css';
+@import './alerts.css';
+@import './utilities.css';
