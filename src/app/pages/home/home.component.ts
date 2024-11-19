@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div class="home-container">
       <app-header></app-header>
-      <app-search-bar style="position: relative; top: -140px;"></app-search-bar>
+      <app-search-bar></app-search-bar>
       <app-content></app-content>
     </div>
   `,

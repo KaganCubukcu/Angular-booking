@@ -7,7 +7,7 @@ import { HotelDataModel } from '../../store/hotel.model';
   styleUrls: ['./card.component.css'],
 })
 export class CardComponent implements OnInit {
-  @Input() hotel: HotelDataModel | undefined;
+  @Input() hotel!: HotelDataModel;
   @Output() bookNowClick = new EventEmitter<string>();
 
   hotelBackgroundPhoto?: string;
@@ -15,7 +15,7 @@ export class CardComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {  
-    this.hotelBackgroundPhoto = this.hotel?.photos[0];
+    this.hotelBackgroundPhoto = this.hotel?.cardBackground;
   }
 
   onBookNowClick() {
