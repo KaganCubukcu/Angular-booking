@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { map, Observable, Subject, takeUntil } from 'rxjs';
-import { HotelDataModel } from '../../features/hotel/store/hotel.model';
+import { HotelDataModel } from '../../../features/hotel/store/hotel.model';
 import { select, Store } from '@ngrx/store';
-import { AppStateInterface } from '../../core/models/app-state.model';
-import { errorSelector, hotelsSelector, isLoadingSelector } from '../../features/hotel/store/hotels.selectors';
+import { AppStateInterface } from '../../../core/models/app-state.model';
+import { errorSelector, hotelsSelector, isLoadingSelector } from '../../../features/hotel/store/hotels.selectors';
 
 interface HotelListingData {
   isLoading$: Observable<boolean>;

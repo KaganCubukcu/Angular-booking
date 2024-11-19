@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthLoginModel, AuthSignupModel } from '../../features/auth/store/auth.model';
+import { AuthLoginModel, AuthSignupModel } from '../../../features/auth/store/auth.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
 

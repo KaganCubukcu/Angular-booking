@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { DataService } from '../../../core/services/data.service';
+import { DataService } from '../../../data-access/services/data.service';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { HotelDataModel } from './hotel.model';
 import * as HotelsActions from './hotels.actions';

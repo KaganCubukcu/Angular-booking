@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { HotelListingComponent } from './pages/hotel-listing/hotel-listing.component';
-import { LoginComponent } from './pages/auth/login/login.component';
-import { SignUpComponent } from './pages/auth/sign-up/sign-up.component';
-import { AccountComponent } from './pages/account/account.component';
-import { HotelDetailsComponent } from './pages/hotel-details/hotel-details.component';
+import { HotelListingComponent } from './pages/hotel/hotel-listing/hotel-listing.component';
+import { LoginComponent } from './features/auth/components/login/login.component';
+import { SignUpComponent } from './features/auth/components/sign-up/sign-up.component';
+import { AccountComponent } from './features/account/components/account.component';
+import { HotelDetailsComponent } from './pages/hotel/hotel-details/hotel-details.component';
 import { PaymentComponent } from './pages/payment/payment.component';
 import { SuccessPageComponent } from './pages/payment/success-page/success-page.component';
 import { ChangelogComponent } from './features/changelog/changelog.component';
