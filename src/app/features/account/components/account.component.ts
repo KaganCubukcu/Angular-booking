@@ -10,6 +10,6 @@ import { Component } from '@angular/core';
     ></app-user-profile>
     <!-- Template End -->
   `,
-  styleUrls: ['./account.component.css'],
+  styles: []
 })
 export class AccountComponent {}
