@@ -1,34 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SocialButtonsComponent } from './components/social-buttons/social-buttons.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { SharedModule } from '@shared/shared.module';
+import { authReducer } from './store/auth.reducer';
 import { AuthEffects } from './store/auth.effects';
-import { ActionReducer, StoreModule } from '@ngrx/store';
-import { AuthReducer } from './store/auth.reducers';
-import { localStorageSync } from 'ngrx-store-localstorage';
-import { AuthStateInterface } from 'src/app/core/models/auth-state.model';
-
-export function localStorageSyncAuthReducer(
-  reducer: ActionReducer<AuthStateInterface>
-): ActionReducer<AuthStateInterface> {
-  return localStorageSync({
-    keys: ['loggedInUser'],
-    rehydrate: true,
-  })(reducer);
-}
+import { LoginComponent } from './components/login/login.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { AuthRoutingModule } from './auth-routing.module';
 
 @NgModule({
-  declarations: [SocialButtonsComponent],
+  declarations: [
+    LoginComponent,
+    SignUpComponent
+  ],
   imports: [
     CommonModule,
-    FormsModule,
     ReactiveFormsModule,
-    EffectsModule.forFeature([AuthEffects]),
-    StoreModule.forFeature('auth', AuthReducer, {
-      metaReducers: [localStorageSyncAuthReducer],
-    }),
-  ],
-  exports: [SocialButtonsComponent],
+    AuthRoutingModule,
+    SharedModule,
+    StoreModule.forFeature('auth', authReducer),
+    EffectsModule.forFeature([AuthEffects])
+  ]
 })
 export class AuthModule {}
