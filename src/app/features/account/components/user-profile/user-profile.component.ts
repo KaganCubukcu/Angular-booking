@@ -1,57 +1,52 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { map, Observable, Subject, takeUntil } from 'rxjs';
-import { AppStateInterface } from 'src/app/core/models/app-state.model';
-import { AuthLoginModel } from 'src/app/features/auth/store/auth.model';
-import { loggedInUserSelector } from 'src/app/features/auth/store/auth.selectors';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { AppStateInterface } from '@core/models/app-state.model';
+import { User } from '@features/auth/store/auth.state';
+import { selectUser } from '@features/auth/store/auth.selectors';
+import * as AuthActions from '@features/auth/store/auth.actions';
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.css'],
+  styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
-  loggedInUser$!: Observable<AuthLoginModel[]>;
+  private readonly destroy$ = new Subject<void>();
+  
+  user$: Observable<User | null>;
+  userData!: User;
   activeTab = 'account';
-  firstName = '';
-  lastName = '';
-  userEmail = '';
 
-  unsubscribe$ = new Subject<void>();
-
-  constructor(private readonly store: Store<AppStateInterface>, private readonly router: Router) {}
-
-  ngOnInit(): void {
-    this.loggedInUser$ = this.store.select(loggedInUserSelector).pipe(map(user => user || []),
-      takeUntil(this.unsubscribe$)
-    );
-    this.loggedInUser$.subscribe((loggedInUser) => {
-      if (loggedInUser) {
-        this.firstName = loggedInUser[0].user.firstName;
-        this.lastName = loggedInUser[0].user.lastName;
-        this.userEmail = loggedInUser[0].user.email;
-      } else {
-        console.error(new Error('Logged in user not found'));
-      }
-    });
-}
-
-  get loggedInUser(): AuthLoginModel[] {
-    let userArray: AuthLoginModel[] = [];
-    this.loggedInUser$.subscribe(users => userArray = users);
-    return userArray; 
+  constructor(
+    private readonly store: Store<AppStateInterface>,
+    private readonly router: Router
+  ) {
+    this.user$ = this.store.select(selectUser);
   }
 
-  logout(): void {
-    localStorage.removeItem('loggedInUser');
-    this.router.navigate(['/']).then(() => {
-      location.reload();
-    });
+  ngOnInit(): void {
+    this.initializeUserData();
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private initializeUserData(): void {
+    this.user$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(user => {
+        if (user) {
+          this.userData = user;
+        }
+      });
+  }
+
+  logout(): void {
+    this.store.dispatch(AuthActions.logout());
+    this.router.navigate(['/login']);
   }
 }

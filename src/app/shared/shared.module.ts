@@ -9,6 +9,8 @@ import { FormErrorDirective } from './directives/form-error.directive';
 import { DateFormatPipe } from './pipes/date-format.pipe';
 import { FooterSectionComponent } from '../layout/footer/footer-section/footer-section.component';
 import { CollapsibleSectionComponent } from '../layout/footer/collapsible-section/collapsible-section.component';
+import { SocialButtonsComponent } from './components/social-buttons/social-buttons.component';
+
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -19,6 +21,7 @@ import { CollapsibleSectionComponent } from '../layout/footer/collapsible-sectio
     DateFormatPipe,
     CollapsibleSectionComponent,
     FooterSectionComponent,
+    SocialButtonsComponent,
   ],
   imports: [CommonModule, RouterModule],
   exports: [
@@ -30,6 +33,7 @@ import { CollapsibleSectionComponent } from '../layout/footer/collapsible-sectio
     DateFormatPipe,
     CollapsibleSectionComponent,
     FooterSectionComponent,
+    SocialButtonsComponent,
   ],
 })
 export class SharedModule {}

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { AppStateInterface } from 'src/app/core/models/app-state.model';
-import { loggedInUserSelector } from 'src/app/features/auth/store/auth.selectors';
+import { selectUser } from 'src/app/features/auth/store/auth.selectors';
 
 @Component({
   selector: 'app-navbar',
@@ -11,9 +11,10 @@ import { loggedInUserSelector } from 'src/app/features/auth/store/auth.selectors
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  loggedInUser$ = this.store.select(loggedInUserSelector);
+  loggedInUser$ = this.store.select(selectUser);
   firstName = '';
   menuActive = false;
+  
   private readonly unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -25,11 +26,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.loggedInUser$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((loggedInUser) => {
-        if (loggedInUser && loggedInUser.length > 0) {
-          this.firstName = loggedInUser[0].user.firstName;
-        } else {
-          console.error('User is not logged in');
-        }
+        loggedInUser ? this.firstName = loggedInUser.firstName : console.error('User is not logged in');
       });
   }
   toggleMenu() {

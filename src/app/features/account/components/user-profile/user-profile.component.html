@@ -3,37 +3,58 @@
         <div class="user-info">
             <div class="user-image-and-name">
                 <div class="user-image-container">
-                    <span class="username-logo">{{ firstName | logo }}</span>
+                    <span class="username-logo">{{ userData.firstName | logo }}</span>
                     <div class="pen">
-                        <img src="/assets/icons/pencil.svg" alt="" />
+                        <img src="/assets/icons/pencil.svg" alt="edit" />
                     </div>
                 </div>
             </div>
             <div class="user-name-and-email">
-                <p class="username">{{ firstName }} {{ lastName }}</p>
-                <p class="user-email">{{ userEmail }}</p>
+                <p class="username">{{ userData.firstName }} {{ userData.lastName }}</p>
+                <p class="user-email">{{ userData.email }}</p>
             </div>
         </div>
     </div>
+
     <div class="account-sections">
-        <section class="account-section-title" (click)="activeTab = 'account'">
+        <section 
+            class="account-section-title" 
+            [class.active]="activeTab === 'account'"
+            (click)="activeTab = 'account'">
             Account
         </section>
         <hr />
-        <section class="account-section-title" (click)="activeTab = 'booking'">
+        <section 
+            class="account-section-title" 
+            [class.active]="activeTab === 'booking'"
+            (click)="activeTab = 'booking'">
             Bookings
         </section>
         <hr />
-        <section class="account-section-title" (click)="activeTab = 'payment'">
+        <section 
+            class="account-section-title" 
+            [class.active]="activeTab === 'payment'"
+            (click)="activeTab = 'payment'">
             Payment methods
         </section>
         <hr />
     </div>
 
-    <app-account-info [loggedInUser]="loggedInUser" *ngIf="activeTab === 'account'"></app-account-info>
+    <ng-container [ngSwitch]="activeTab">
+        <app-account-info 
+            *ngSwitchCase="'account'"
+            [userData]="userData">
+        </app-account-info>
 
-    <app-bookings-info *ngIf="activeTab === 'booking'"></app-bookings-info>
-    <app-payment-info *ngIf="activeTab === 'payment'"></app-payment-info>
+        <app-bookings-info 
+            *ngSwitchCase="'booking'">
+        </app-bookings-info>
+
+        <app-payment-info 
+            *ngSwitchCase="'payment'">
+        </app-payment-info>
+    </ng-container>
+
     <div class="logout-button-container">
         <button (click)="logout()">LOG OUT</button>
     </div>
