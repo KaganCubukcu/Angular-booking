@@ -12,7 +12,13 @@ export const initialState: SearchStateInterface = {
       accommodationType: []
     },
     sortBy: 'rating',
-    sortOrder: 'desc'
+    sortOrder: 'desc',
+    searchDetails: {
+      destination: '',
+      checkIn: '',
+      checkOut: '',
+      roomsGuests: ''
+    }
   },
   isSearching: false,
   error: null
@@ -46,6 +52,14 @@ export const searchReducer = createReducer(
       ...state.search,
       sortBy,
       sortOrder
+    }
+  })),
+
+  on(SearchActions.updateSearchDetails, (state, { searchDetails }) => ({
+    ...state,
+    search: {
+      ...state.search,
+      searchDetails
     }
   })),
 

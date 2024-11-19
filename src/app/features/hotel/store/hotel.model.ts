@@ -1,3 +1,5 @@
+import { EntityState } from '@ngrx/entity';
+
 export interface Room {
   name: string;
   description: string;
@@ -37,9 +39,8 @@ export interface ErrorState {
   timestamp?: Date;
 }
 
-export interface HotelsStateInterface {
-  hotels: HotelDataModel[];
-  selectedHotel: HotelDataModel | null;
+export interface HotelsStateInterface extends EntityState<HotelDataModel> {
+  selectedHotelId: string | null;
   isLoading: boolean;
   error: ErrorState | null;
 }

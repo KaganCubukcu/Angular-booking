@@ -7,7 +7,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { AppStateInterface } from '@core/models/app-state.model';
 import { selectUser } from '@features/auth/store/auth.selectors';
 import { HotelDataModel } from '@features/hotel/store/hotel.model';
-import { selectSearchResult } from '@features/hotel/store/search/search.selector';
+import { selectSearchDetails } from '@features/hotel/store/search/search.selector';
 import { environment } from '@env/environments';
 
 interface RoomDetails {
@@ -107,14 +107,14 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   private initializeSearchDetails(): void {
-    this.store.select(selectSearchResult)
+    this.store.select(selectSearchDetails)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (searchResult) => {
-          if (searchResult.length > 0) {
-            this.checkInDate = searchResult[0].checkIn;
-            this.checkOutDate = searchResult[0].checkOut;
-            this.roomsGuests = searchResult[0].roomsGuests;
+        next: (searchDetails) => {
+          if (searchDetails) {
+            this.checkInDate = searchDetails.checkIn;
+            this.checkOutDate = searchDetails.checkOut;
+            this.roomsGuests = searchDetails.roomsGuests;
             this.calculateTotalPrice();
           }
         },
@@ -170,7 +170,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
       hotelName: this.hotel.name,
     };
 
-    this.http.post('http://localhost:8000/checkout', payload)
+    this.http.post(`${environment.apiUrl}/checkout`,payload)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: async (res: any) => {

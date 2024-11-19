@@ -23,6 +23,7 @@ export interface SearchState {
   sortBy: 'price' | 'rating' | 'name';
   sortOrder: 'asc' | 'desc';
   lastSearch?: Date;
+  searchDetails: SearchBarDataModel;
 }
 
 export interface SearchStateInterface {

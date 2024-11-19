@@ -21,6 +21,11 @@ export const selectSortOptions = createSelector(
   })
 );
 
+export const selectSearchDetails = createSelector(
+  selectSearchState,
+  (state: SearchStateInterface) => state.search.searchDetails
+);
+
 export const selectPriceRange = createSelector(
   selectSearchFilters,
   (filters) => filters.priceRange
