@@ -23,8 +23,8 @@ export class AuthEffects {
   signup$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.signup),
-      mergeMap(({ email, password, name }) =>
-        this.authService.signup(email, password, name).pipe(
+      mergeMap(({ email, password, firstName, lastName }) =>
+        this.authService.signup(email, password, firstName, lastName).pipe(
           map(user => AuthActions.signupSuccess({ user })),
           catchError(error => of(AuthActions.signupFailure({ error: error.message })))
         )

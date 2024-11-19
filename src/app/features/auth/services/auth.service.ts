@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { User } from '../store/auth.state';
-import { environment } from '@env/environment';
+import { environment } from '@env/environments';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +20,8 @@ export class AuthService {
       );
   }
 
-  signup(email: string, password: string, name: string): Observable<User> {
-    return this.http.post<User>(`${this.apiUrl}/signup`, { email, password, name })
+  signup(email: string, password: string, firstName: string, lastName: string): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/signup`, { email, password, firstName, lastName })
       .pipe(
         tap(user => this.setToken(user.token))
       );
