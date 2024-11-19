@@ -1,0 +1,16 @@
+<div class="collapsible">
+  <button (click)="isExpanded = !isExpanded" class="collapsible-trigger">
+    {{ title }}
+    <span class="arrow-icon" [class.arrow-rotated]="isExpanded">▼</span>
+  </button>
+
+  <div class="collapsible-content" *ngIf="isExpanded">
+    <ul class="link-list">
+      <li *ngFor="let link of links">
+        <a href="#" class="link-item">
+          {{ link }}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

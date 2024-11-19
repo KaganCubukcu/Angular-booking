@@ -4,6 +4,7 @@ import { AppStateInterface } from 'src/app/core/models/app-state.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import slugify from 'slugify';
 import { HotelDataModel } from 'src/app/features/hotel/store/hotel.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-hotel-details',
@@ -11,35 +12,58 @@ import { HotelDataModel } from 'src/app/features/hotel/store/hotel.model';
   styleUrls: ['./hotel-details.component.css'],
 })
 export class HotelDetailsComponent implements OnInit {
-  hotel: HotelDataModel | undefined;
-  categories: string[] = [];
   @ViewChild('roomsHeader') roomsHeader!: ElementRef;
 
-  constructor(private readonly router: Router, private readonly route: ActivatedRoute, private readonly store: Store<AppStateInterface>) {}
+  hotel: HotelDataModel | undefined;
+  categories: string[] = [];
+  currentImageIndex: number = 0;
+  bookingForm: FormGroup;
+
+  constructor(
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+    private readonly store: Store<AppStateInterface>,
+    private fb: FormBuilder
+  ) {
+    this.bookingForm = this.fb.group({
+      checkIn: ['', Validators.required],
+      checkOut: ['', Validators.required],
+      guests: ['', Validators.required],
+    });
+  }
 
   ngOnInit() {
-    // Get the slug from the URL route
     this.route.paramMap.subscribe((params) => {
       const slug = params.get('name');
-      // Retrieve the hotel information from the store
       this.store.select('hotels').subscribe((state) => {
         this.hotel = state.hotels.find((h) => slugify(h.name) === slug);
-        // Get the first 4 amenities
-        this.categories = this.hotel?.amenities?.slice(0, 4) || [];
+        this.categories = this.hotel?.amenities || [];
       });
     });
   }
 
-  bookRoom(room: any) {
-    localStorage.setItem('roomName', room.name);
-    localStorage.setItem('roomPrice', room.price.toString());
-    localStorage.setItem('hotelName', this.hotel?.name!);
-    this.router.navigate(['/payment']);
+  bookRoom() {
+    if (this.bookingForm.valid && this.hotel) {
+      const bookingData = {
+        ...this.bookingForm.value,
+        hotelName: this.hotel.name,
+        roomPrice: this.hotel.nightlyPrice,
+      };
+      this.router.navigate(['/payment']);
+    }
   }
 
   scrollToRoomsHeader() {
     this.roomsHeader.nativeElement.scrollIntoView({
       behavior: 'smooth',
     });
+  }
+
+  nextImage() {
+    this.currentImageIndex = (this.currentImageIndex + 1) % this.hotel?.photos.length!;
+  }
+
+  prevImage() {
+    this.currentImageIndex = (this.currentImageIndex - 1 + this.hotel?.photos.length!) % this.hotel?.photos.length!;
   }
 }

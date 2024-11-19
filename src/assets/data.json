@@ -2,7 +2,7 @@
   {
     "name": "Grand Hotel",
     "nightlyPrice": 150,
-    "cardBackground": "https://images.unsplash.com/photo-1630587148265-761cbd139043?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8Z3JhbmQlMjBob3RlbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400&q=60",
+    "cardBackground": "assets/hotel-photos/grand-hotel/outside/grand-hotel-out.png",
     "address": {
       "streetAddress": "123 Main Street",
       "city": "Anytown",
@@ -12,11 +12,10 @@
     "rating": 4.5,
     "accommodationType": "hotel",
     "photos": [
-      "https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80",
-      "https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      "https://images.unsplash.com/photo-1596701062351-8c2c14d1fdd0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-      "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1174&q=80"
+      "assets/hotel-photos/grand-hotel/room/grand-hotel-1.png",
+      "assets/hotel-photos/grand-hotel/room/grand-hotel-2.png",
+      "assets/hotel-photos/grand-hotel/room/grand-hotel-3.png",
+      "assets/hotel-photos/grand-hotel/room/grand-hotel-4.png"
     ],
     "overview": "The Grand Hotel offers luxurious accommodations and top-notch amenities for discerning travelers.",
     "rooms": [

@@ -1,9 +1,14 @@
 body {
-  font-family: "Roboto", sans-serif !important;
+  font-family: 'Roboto', sans-serif !important;
 }
 p {
   margin: 0 !important;
   padding: 0 !important;
+}
+
+a {
+  text-decoration: none !important;
+  color: inherit !important;
 }
 
 ul {

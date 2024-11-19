@@ -12,9 +12,8 @@ import { environment } from 'src/environments/environments';
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.css'],
 })
-
 export class PaymentComponent implements OnInit {
-  room: { name: string; price: number, description: string} | undefined;
+  room: { name: string; price: number; description: string } | undefined;
   hotel: HotelDataModel | undefined;
   firstName = '';
   lastName = '';
@@ -69,20 +68,19 @@ export class PaymentComponent implements OnInit {
       numberOfGuests = parseInt(adults) + parseInt(children);
     }
 
-    // Calculate the number of days between checkInDate and checkOutDate
     const checkInDate = new Date(this.checkInDate);
     const checkOutDate = new Date(this.checkOutDate);
     const timeDiff = checkOutDate.getTime() - checkInDate.getTime();
     const numberOfDays = timeDiff / (1000 * 3600 * 24);
 
-    // Calculate the total price
     const basePrice = this.room?.price || 0 * numberOfGuests * numberOfDays;
     const taxAmount = basePrice * this.tax;
     this.totalPrice = basePrice + taxAmount + this.serviceFee;
   }
 
   onCheckout() {
-    this.http.post('http://localhost:8000/checkout', {
+    this.http
+      .post('http://localhost:8000/checkout', {
         name: `${this.firstName} ${this.lastName}'s Payment`,
         amount: this.totalPrice,
         roomName: this.room?.name,

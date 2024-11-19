@@ -15,8 +15,8 @@
   font-size: 1.1rem;
   color: #666;
   line-height: 1.6;
-  max-width: 800px;
   margin: 20px 0 !important;
+  text-align: center;
 }
 
 .content-card-container {
