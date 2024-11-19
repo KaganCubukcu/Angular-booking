@@ -4,22 +4,47 @@
       <h1 class="login-title">Login</h1>
       <p class="login-description">Login to access your Bookify account</p>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
-        <div class="login-form-inputs">
-          <input type="email" placeholder="e-mail" formControlName="email" class="login-input" />
-          <input type="password" placeholder="password" formControlName="password" class="login-input" />
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-control"
+            [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+          />
+          <div class="invalid-feedback" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+            {{ getErrorMessage('email') }}
+          </div>
         </div>
-        <div class="login-options">
-          <label class="remember-me">
-            <input type="checkbox" />
-            Remember me
-          </label>
-          <a href="#" class="forgot-password"> Forgot Password? </a>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            class="form-control"
+            [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+          />
+          <div class="invalid-feedback" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+            {{ getErrorMessage('password') }}
+          </div>
         </div>
-        <button type="submit" class="login-button">Login</button>
+
+        <div class="alert alert-danger" *ngIf="error$ | async as error">
+          {{ error }}
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid || (loading$ | async)">
+          <span class="spinner-border spinner-border-sm" *ngIf="loading$ | async"></span>
+          Login
+        </button>
+
+        <div class="mt-3">
+          <a routerLink="/auth/signup">Don't have an account? Sign up</a>
+        </div>
       </form>
-      <p class="signup-prompt">
-        Don't have an account? <a href="#" routerLink="/sign-up" class="signup-link">Sign up</a>
-      </p>
       <div class="social-login">
         <app-social-buttons text="login"></app-social-buttons>
       </div>
