@@ -33,7 +33,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
   checkInDate = '';
   checkOutDate = '';
   roomsGuests = '';
+
   private destroy$ = new Subject<void>();
+  user$ = this.store.select(selectUser);
 
   constructor(
     private readonly store: Store<AppStateInterface>,
@@ -73,8 +75,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   private initializeUserDetails(): void {
-    this.store.select(selectUser)
-      .pipe(takeUntil(this.destroy$))
+    this.user$.pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (user) => {
           if (user) {

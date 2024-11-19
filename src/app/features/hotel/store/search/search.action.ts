@@ -21,6 +21,11 @@ export const updateSearchDetails = createAction(
   props<{ searchDetails: SearchBarDataModel }>()
 );
 
+export const updateSearchBar = createAction(
+  '[Search] Update Search Bar',
+  props<{ searchBar: SearchBarDataModel }>()
+);
+
 export const clearSearch = createAction('[Search] Clear Search');
 
 export const searchError = createAction(

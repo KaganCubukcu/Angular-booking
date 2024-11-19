@@ -63,6 +63,14 @@ export const searchReducer = createReducer(
     }
   })),
 
+  on(SearchActions.updateSearchBar, (state, { searchBar }) => ({
+    ...state,
+    search: {
+      ...state.search,
+      searchDetails: searchBar
+    }
+  })),
+
   on(SearchActions.clearSearch, () => initialState),
 
   on(SearchActions.searchError, (state, { error }) => ({

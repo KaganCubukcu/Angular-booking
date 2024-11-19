@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HotelDataModel } from '../../store/hotel.model';
+import { HotelDataModel, ErrorState } from '../../store/hotel.model';
 import { select, Store } from '@ngrx/store';
 import { AppStateInterface } from '../../../../core/models/app-state.model';
 import {
   errorSelector,
-  hotelsSelector,
+  selectAllHotels,
   isLoadingSelector,
 } from '../../store/hotels.selectors';
 import { Router } from '@angular/router';
@@ -18,13 +18,13 @@ import slugify from 'slugify';
 })
 export class ContentComponent {
   isLoading$: Observable<boolean>;
-  error$: Observable<string | null>;
+  error$: Observable<ErrorState | null>;
   hotels$: Observable<HotelDataModel[]>;
 
   constructor(private readonly store: Store<AppStateInterface>, private readonly router: Router) {
     this.error$ = this.store.pipe(select(errorSelector));
     this.isLoading$ = this.store.pipe(select(isLoadingSelector));
-    this.hotels$ = this.store.pipe(select(hotelsSelector));
+    this.hotels$ = this.store.pipe(select(selectAllHotels));
   }
 
   onHotelBookNowClick(hotelName: string) {

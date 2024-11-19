@@ -11,7 +11,7 @@ import { HotelsEffects } from './store/hotels.effects';
 import { StoreModule } from '@ngrx/store';
 import { hotelReducer } from './store/hotels.reducers';
 import { localStorageSync } from 'ngrx-store-localstorage';
-import { searchBarReducer } from './store/search/search.reducers';
+import { searchReducer } from './store/search/search.reducers';
 import { AdventureAwaitsComponent } from './components/adventure-awaits/adventure-awaits.component';
 
 @NgModule({
@@ -36,7 +36,7 @@ import { AdventureAwaitsComponent } from './components/adventure-awaits/adventur
         }),
       ],
     }),
-    [StoreModule.forFeature('search', searchBarReducer)],
+    [StoreModule.forFeature('search', searchReducer)],
   ],
   exports: [
     SearchBarComponent,
