@@ -10,15 +10,15 @@ export class CardComponent implements OnInit {
   @Input() hotel!: HotelDataModel;
   @Output() bookNowClick = new EventEmitter<string>();
 
-  hotelBackgroundPhoto?: string;
+  hotelBackgroundPhoto = '';
 
   constructor() {}
 
   ngOnInit(): void {  
-    this.hotelBackgroundPhoto = this.hotel?.cardBackground;
+    this.hotelBackgroundPhoto = this.hotel.cardBackground || '';
   }
 
-  onBookNowClick() {
-    this.bookNowClick.emit(this.hotel?.name);
+  onBookNowClick(): void {
+    this.bookNowClick.emit(this.hotel.name);
   }
 }

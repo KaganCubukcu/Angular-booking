@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Changelog } from './models/Changelog.model';
-import { ChangelogService } from 'src/app/core/services/changelog.service';
+import { ChangelogService } from 'src/app/data-access/services/changelog.service';
 
 @Component({
   selector: 'app-changelog',

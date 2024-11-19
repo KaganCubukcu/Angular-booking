@@ -1,12 +1,12 @@
-<div class="card-container">
-  <div>
+<div class="card-container" (click)="onBookNowClick()">
+  <div class="card">
     <div>
       <section class="card-content-background" [style.backgroundImage]="'url(' + hotelBackgroundPhoto + ')'"></section>
     </div>
     <div>
       <section class="card-content">
-        <span class="card-title">{{ hotel?.name }}</span>
-        <span class="card-price">{{ hotel?.nightlyPrice | currency }} /night</span>
+        <span class="card-title">{{ hotel.name }}</span>
+        <span class="card-price">{{ hotel.nightlyPrice ? (hotel.nightlyPrice | currency) + ' /night' : '' }}</span>
       </section>
     </div>
   </div>
