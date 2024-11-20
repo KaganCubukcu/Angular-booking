@@ -39,7 +39,7 @@
             </div>
         </div>
 
-        <ng-container *ngIf="loggedInUser$ | async as loggedInUser; else notLoggedIn">
+        <ng-container *ngIf="user$ | async as loggedInUser; else notLoggedIn">
             <div class="credit-card">
                 <div class="credit-card__logo">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/800px-Visa_Inc._logo.svg.png?20170118154621"
@@ -107,13 +107,19 @@
                 </table>
             </div>
 
-            <ng-container *ngIf="loggedInUser$ | async as loggedInUser; else notLoggedInPay">
+            <ng-container *ngIf="user$ | async as loggedInUser; else notLoggedInPay">
                 <div class="pay-button-container">
                     <button #payButton (click)="onCheckout()">Pay Now</button>
                 </div>
             </ng-container>
 
-            <ng-template #notLoggedInPay> </ng-template>
+            <ng-template #notLoggedInPay>
+                <div class="login-signup-container">
+                    <span class="login-signup-text">Please login to proceed with payment</span>
+                    <button class="login-button" routerLink="/login">Login</button>
+                    <button class="signup-button" routerLink="/sign-up">Sign up</button>
+                </div>
+            </ng-template>
         </div>
     </div>
 </div>

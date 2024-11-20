@@ -1,7 +1,8 @@
-import { HotelDataModel } from '../../features/hotel/store/hotel.model';
+import { EntityState } from '@ngrx/entity';
+import { HotelDataModel, ErrorState } from '../../features/hotel/store/hotel.model';
 
-export interface HotelsStateInterface {
-  hotels: HotelDataModel[];
+export interface HotelsStateInterface extends EntityState<HotelDataModel> {
+  selectedHotelId: string | null;
   isLoading: boolean;
-  error: string | null;
+  error: ErrorState | null;
 }

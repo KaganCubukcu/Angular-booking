@@ -1,14 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-
-interface User {
-  firstName: string;
-  email: string;
-  phoneNumber: string;
-}
-
-interface LoggedInUser {
-  user: User;
-}
+import { User } from '@features/auth/store/auth.state';
 
 @Component({
   selector: 'app-account-info',
@@ -16,7 +7,7 @@ interface LoggedInUser {
   styleUrls: ['./account-info.component.css'],
 })
 export class AccountInfoComponent implements OnInit {
-  @Input() loggedInUser!: LoggedInUser[];
+  @Input() userData!: User;
 
   userInfoContainers = [
     {
@@ -44,10 +35,10 @@ export class AccountInfoComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    if (this.loggedInUser) {
-      this.userInfoContainers[0].value = this.loggedInUser[0].user.firstName;
-      this.userInfoContainers[1].value = this.loggedInUser[0].user.email;
-      this.userInfoContainers[3].value = this.loggedInUser[0].user.phoneNumber;
+    if (this.userData) {
+      this.userInfoContainers[0].value = `${this.userData.firstName} ${this.userData.lastName}`;
+      this.userInfoContainers[1].value = this.userData.email;
+      this.userInfoContainers[3].value = this.userData.phoneNumber;
     } else {
       console.error(new Error('Logged in user not found'));
     }

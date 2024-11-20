@@ -1,53 +1,56 @@
 .content-container {
+  padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
 }
 
 .content-title {
-  font-size: 2.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
   color: #333;
-  margin-bottom: 20px;
-  text-align: center;
 }
 
 .content-description {
   font-size: 1.1rem;
   color: #666;
-  line-height: 1.6;
-  margin: 20px 0 !important;
-  text-align: center;
+  margin-bottom: 2rem !important;
+  line-height: 1.5;
 }
 
 .content-card-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 1rem 0;
 }
 
-.hotel-card {
-  background-color: #fff;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+/* Loading spinner */
+.spinner-border {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: text-bottom;
+  border: 0.25em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spinner-border .75s linear infinite;
 }
 
-.hotel-card:hover {
-  transform: translateY(-5px);
+@keyframes spinner-border {
+  to { transform: rotate(360deg); }
 }
 
-@media only screen and (max-width: 768px) {
-  .content-title {
-    font-size: 2rem;
+.text-primary {
+  color: #007bff !important;
+}
+
+@media only screen and (max-width: 1199.98px) {
+  .content-container {
+    padding: 1rem;
   }
-
-  .content-description {
-    font-size: 1rem;
-  }
-
+  
   .content-card-container {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
+    gap: 1rem;
   }
 }

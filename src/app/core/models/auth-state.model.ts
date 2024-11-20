@@ -1,10 +1,7 @@
-import {
-  AuthLoginModel,
-  AuthSignupModel,
-} from '../../features/auth/store/auth.model';
+import { UserModel } from '../../features/auth/store/auth.model';
 
 export interface AuthStateInterface {
-  loggedInUser: AuthLoginModel[] | null;
-  signUpUser: AuthSignupModel[] | null;
+  currentUser: UserModel | null;
+  loading: boolean;
   error: string | null;
 }

@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { AuthService } from '../../../core/auth/services/auth.service';
-import { catchError, exhaustMap, map, of } from 'rxjs';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { Router } from '@angular/router';
 import * as AuthActions from './auth.actions';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class AuthEffects {
-  constructor(private readonly actions$: Actions, private readonly authService: AuthService) {}
-
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.login),
-      exhaustMap((action) =>
-        this.authService.login(action.email, action.password).pipe(
-          map((user) => AuthActions.loginSuccess({ loggedInUser: [user] })),
-          catchError((error) => of(AuthActions.loginFailure({ error })))
+      mergeMap(({ email, password }) =>
+        this.authService.login(email, password).pipe(
+          map(user => AuthActions.loginSuccess({ user })),
+          catchError(error => of(AuthActions.loginFailure({ error: error.message })))
         )
       )
     )
@@ -22,22 +22,40 @@ export class AuthEffects {
 
   signup$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.signUp),
-      exhaustMap((action) =>
-        this.authService
-          .signUp(
-            action.firstName,
-            action.lastName,
-            action.email,
-            action.phoneNumber,
-            action.password
-          )
-          .pipe(
-            map((user) => AuthActions.signUpSuccess({ signUpUser: [user] })),
-            catchError((error) => of(AuthActions.signUpFailure({ error })))
-          )
+      ofType(AuthActions.signup),
+      mergeMap(({ email, password, firstName, lastName }) =>
+        this.authService.signup(email, password, firstName, lastName).pipe(
+          map(user => AuthActions.signupSuccess({ user })),
+          catchError(error => of(AuthActions.signupFailure({ error: error.message })))
+        )
       )
     )
   );
 
+  authSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.loginSuccess, AuthActions.signupSuccess),
+        tap(() => this.router.navigate(['/']))
+      ),
+    { dispatch: false }
+  );
+
+  logout$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.logout),
+        tap(() => {
+          this.authService.logout();
+          this.router.navigate(['/auth/login']);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  constructor(
+    private actions$: Actions,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 }

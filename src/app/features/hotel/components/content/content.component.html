@@ -1,18 +1,42 @@
 <div class="content-container">
   <h2 class="content-title">Fall into travel</h2>
   <p class="content-description">
-    Going somewhere to celebrate this season? Whether you’re going home or
-    somewhere to roam, we’ve got the travel tools to get you to your
+    Going somewhere to celebrate this season? Whether you're going home or
+    somewhere to roam, we've got the travel tools to get you to your
     destination.
   </p>
-  <div class="content-card-container">
+
+  <!-- Error State -->
+  <div *ngIf="error$ | async as error" class="alert alert-danger">
+    <p>{{ error.message }}</p>
+    <small *ngIf="error.code">Error code: {{ error.code }}</small>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading$ | async" class="d-flex justify-content-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content-card-container" *ngIf="!(isLoading$ | async) && !(error$ | async)">
     <ng-container *ngIf="hotels$ | async as hotels">
-      <ng-container *ngFor="let hotel of hotels">
-        <app-card
-          [hotel]="hotel"
-          (bookNowClick)="onHotelBookNowClick($event)"
-        ></app-card>
+      <ng-container *ngIf="hotels.length > 0; else noHotels">
+        <ng-container *ngFor="let hotel of hotels">
+          <app-card
+            [hotel]="hotel"
+            (bookNowClick)="onHotelBookNowClick($event)"
+          ></app-card>
+        </ng-container>
       </ng-container>
     </ng-container>
   </div>
 </div>
+
+<!-- No Hotels Template -->
+<ng-template #noHotels>
+  <div class="alert alert-info">
+    No hotels found. Try adjusting your search criteria.
+  </div>
+</ng-template>

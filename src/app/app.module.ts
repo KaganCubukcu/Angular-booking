@@ -9,8 +9,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HotelListingComponent } from './pages/hotel/hotel-listing/hotel-listing.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { LoginComponent } from './features/auth/components/login/login.component';
-import { SignUpComponent } from './features/auth/components/sign-up/sign-up.component';
 import { HotelModule } from './features/hotel/hotel.module';
 import { SharedModule } from './shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -28,8 +26,6 @@ import { ChangelogComponent } from './features/changelog/changelog.component';
     AppComponent,
     HomeComponent,
     HotelListingComponent,
-    LoginComponent,
-    SignUpComponent,
     AccountComponent,
     HotelDetailsComponent,
     PaymentComponent,
@@ -44,15 +40,16 @@ import { ChangelogComponent } from './features/changelog/changelog.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    NgbModule,
+    BrowserAnimationsModule,
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: !isDevMode(),
+      autoPause: true,
     }),
-    NgbModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

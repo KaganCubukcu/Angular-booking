@@ -1,27 +1,49 @@
-import { HotelsStateInterface } from '../../../core/models/hotels-state.model';
 import { createReducer, on } from '@ngrx/store';
+import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { HotelDataModel, HotelsStateInterface } from './hotel.model';
 import * as HotelsActions from './hotels.actions';
 
-export const initialState: HotelsStateInterface = {
-  hotels: [],
+export const adapter: EntityAdapter<HotelDataModel> = createEntityAdapter<HotelDataModel>({
+  selectId: (hotel: HotelDataModel) => hotel.id,
+  sortComparer: (a: HotelDataModel, b: HotelDataModel) => b.rating - a.rating,
+});
+
+export const initialState: HotelsStateInterface = adapter.getInitialState({
+  selectedHotelId: null,
   isLoading: false,
   error: null,
-};
+});
 
 export const hotelReducer = createReducer(
   initialState,
+  
   on(HotelsActions.loadHotels, (state) => ({
     ...state,
     isLoading: true,
+    error: null
   })),
-  on(HotelsActions.loadHotelsSuccess, (state, action) => ({
+
+  on(HotelsActions.loadHotelsSuccess, (state, { hotels }) => {
+    return adapter.setAll(hotels, {
+      ...state,
+      isLoading: false,
+      error: null
+    });
+  }),
+
+  on(HotelsActions.loadHotelsFailure, (state, { error }) => ({
     ...state,
-    hotels: action.hotels,
-    isLoading: false,
+    error,
+    isLoading: false
   })),
-  on(HotelsActions.loadHotelsFailure, (state, action) => ({
+
+  on(HotelsActions.selectHotel, (state, { hotelId }) => ({
     ...state,
-    error: action.error,
-    isLoading: false,
+    selectedHotelId: hotelId
+  })),
+
+  on(HotelsActions.clearSelectedHotel, (state) => ({
+    ...state,
+    selectedHotelId: null
   }))
 );

@@ -1,7 +1,7 @@
 export interface AuthLoginModel {
   email: string;
   password: string;
-  user: UserModel;
+  user?: UserModel;
 }
 
 export interface AuthSignupModel {
@@ -11,6 +11,7 @@ export interface AuthSignupModel {
   phoneNumber: string;
   password: string;
 }
+
 export interface UserModel {
   _id: string;
   firstName: string;
@@ -18,4 +19,6 @@ export interface UserModel {
   email: string;
   password: string;
   phoneNumber: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

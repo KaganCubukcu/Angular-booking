@@ -17,8 +17,8 @@ export class SignUpComponent implements OnInit {
   constructor(private readonly fb: FormBuilder, private readonly store: Store<AppStateInterface>, private readonly router: Router) {}
 
   ngOnInit() {
-    this.store.select(AuthSelectors.signUpUserSelector).subscribe((signUpUser) => {
-      if (signUpUser) {
+    this.store.select(AuthSelectors.selectUser).subscribe((user) => {
+      if (user) {
         this.router.navigate(['/login']);
       }
     });
@@ -48,7 +48,7 @@ export class SignUpComponent implements OnInit {
     if (this.signUpForm.invalid) return;
 
     const { firstName, lastName, email, phoneNumber, password } = this.signUpForm.value;
-    this.store.dispatch(AuthActions.signUp({ firstName, lastName, email, phoneNumber, password }));
+    this.store.dispatch(AuthActions.signup({ firstName, lastName, email, phoneNumber, password }));
   }
 
   formatPhoneNumber() {

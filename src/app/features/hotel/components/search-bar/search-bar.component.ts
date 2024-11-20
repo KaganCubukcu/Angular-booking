@@ -1,14 +1,15 @@
-import { Component, TemplateRef, OnInit, HostListener, ElementRef } from '@angular/core';
+import { Component, TemplateRef, OnInit, HostListener, ElementRef, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { select, Store } from '@ngrx/store';
 import { filter, map, Observable, Subject, takeUntil } from 'rxjs';
 import { AppStateInterface } from 'src/app/core/models/app-state.model';
 import { HotelDataModel } from '../../store/hotel.model';
-import { hotelsSelector } from '../../store/hotels.selectors';
+import { selectAllHotels } from '../../store/hotels.selectors';
+import { SearchBarDataModel } from '../../store/search/search.model';
+import { updateSearchDetails } from '../../store/search/search.action';
 import { Router } from '@angular/router';
 import slugify from 'slugify';
-import { updateSearchBar } from '../../store/search/search.action';
 import { ChangeDetectorRef } from '@angular/core';
 
 interface GuestsData {
@@ -20,7 +21,7 @@ interface GuestsData {
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.css'],
 })
-export class SearchBarComponent implements OnInit {
+export class SearchBarComponent implements OnInit, OnDestroy {
   today!: string;
   form: FormGroup;
   hotels$: Observable<HotelDataModel[]>;
@@ -30,6 +31,7 @@ export class SearchBarComponent implements OnInit {
   formSubmitted = false;
   showDestinationSuggestions = false;
   unsubscribe$ = new Subject<void>();
+  destroy$ = new Subject<void>();
 
   guestsData: GuestsData = {
     rooms: 1,
@@ -55,7 +57,7 @@ export class SearchBarComponent implements OnInit {
     if (checkOutControl) {
       checkOutControl.setValidators(this.checkOutValidator.bind(this));
     }
-    this.hotels$ = this.store.pipe(select(hotelsSelector));
+    this.hotels$ = this.store.pipe(select(selectAllHotels));
     this.hotels$.pipe(filter((hotels) => !!hotels)).subscribe((hotels) => {
       this.hotelCountry = hotels.map((hotel) => hotel.address.country);
       this.filteredHotels = hotels;
@@ -158,23 +160,23 @@ export class SearchBarComponent implements OnInit {
       const { destination, checkIn, checkOut, roomsGuests } = this.form.value;
       const country = destination;
       const countrySlug = slugify(country, { lower: true });
+      
+      const searchDetails: SearchBarDataModel = {
+        destination,
+        checkIn: this.formatDateForDisplay(checkIn),
+        checkOut: this.formatDateForDisplay(checkOut),
+        roomsGuests,
+      };
+
       this.store.dispatch(
-        updateSearchBar({
-          searchResult: [
-            {
-              destination,
-              checkIn: this.formatDateForDisplay(checkIn),
-              checkOut: this.formatDateForDisplay(checkOut),
-              roomsGuests,
-            },
-          ],
+        updateSearchDetails({
+          searchDetails
         })
       );
+
       this.router.navigate(['/hotel-listing'], {
         queryParams: { country: countrySlug },
       });
-    } else {
-      console.error('Error: All form fields are required.');
     }
   }
 
@@ -186,16 +188,16 @@ export class SearchBarComponent implements OnInit {
   selectDestination(country: string) {
     this.form.patchValue({ destination: country });
     this.showDestinationSuggestions = false;
-    this.cdr.detectChanges(); // Değişiklikleri hemen yansıtmak için
+    this.cdr.detectChanges();
   }
 
   toggleDestinationSuggestions(event: Event) {
-    event.stopPropagation(); // Bu satırı ekleyin
+    event.stopPropagation();
     this.showDestinationSuggestions = !this.showDestinationSuggestions;
   }
 
   searchHotels(event: Event) {
-    event.stopPropagation(); // Bu satırı ekleyin
+    event.stopPropagation();
     const inputElement = event.target as HTMLInputElement;
     const value = inputElement.value;
     this.hotels$
@@ -221,5 +223,7 @@ export class SearchBarComponent implements OnInit {
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
