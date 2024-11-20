@@ -20,11 +20,6 @@ const routes: Routes = [
         component: SignUpComponent,
         data: { title: 'Sign Up' }
       },
-      {
-        path: '',
-        redirectTo: 'login',
-        pathMatch: 'full'
-      }
     ]
   }
 ];
