@@ -18,23 +18,33 @@
       <button class="sign-up-button" routerLink="/sign-up">Sign Up</button>
     </li>
 
-    <!-- logged in -->
-
     <ng-template #loggedInTrue>
-      <div class="logged-in-container">
+      <li class="logged-in-container">
         <button class="changelog-button" routerLink="/changelog">
           <img src="assets/icons/changelog.svg" alt="changelog" class="changelog-icon" />
           Changelog
         </button>
-        <i class="bi bi-heart"></i>
-        <span class="user-favourites">Favourites</span>
-        <span class="user-avatar" routerLink="/account">{{ firstName | logo }}</span>
-        <span class="user-name" routerLink="/account">
-          <ng-container *ngIf="menuActive; else showFirstName">Settings</ng-container>
-          <ng-template #showFirstName>{{ firstName }}</ng-template>
-        </span>
-        <button (click)="toggleMenu()" class="menu-toggle-button">Toggle Menu</button>
-      </div>
+        <button class="favorites-button" routerLink="/favorites">
+          <i class="bi bi-heart"></i>
+          <span class="user-favourites">Favourites</span>
+        </button>
+        <div class="user-profile-section">
+          <span class="user-avatar" routerLink="/account">{{ firstName | logo }}</span>
+          <span class="user-name" routerLink="/account">
+            {{ firstName }}
+          </span>
+          <button (click)="toggleMenu()" class="menu-toggle-button">
+            <i class="bi bi-caret-down-fill"></i>
+          </button>
+          <div *ngIf="menuActive" class="user-menu">
+            <ul>
+              <li routerLink="/account">My Account</li>
+              <li routerLink="/account">Settings</li>
+              <li (click)="logout()">Logout</li>
+            </ul>
+          </div>
+        </div>
+      </li>
     </ng-template>
   </ul>
 </nav>

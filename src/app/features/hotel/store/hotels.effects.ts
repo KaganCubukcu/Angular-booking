@@ -7,19 +7,20 @@ import * as HotelsActions from './hotels.actions';
 
 @Injectable()
 export class HotelsEffects {
-  constructor(private readonly actions$: Actions, private readonly dataService: DataService) {}
+  constructor(private readonly actions$: Actions, private readonly dataService: DataService) { }
 
-  getHotels$ = createEffect(() => this.actions$.pipe(ofType(HotelsActions.loadHotels),
+  getHotels$ = createEffect(() => this.actions$.pipe(
+    ofType(HotelsActions.loadHotels),
     switchMap(() => {
       return this.dataService.getHotels().pipe(
         map((hotels: HotelDataModel[]) =>
           HotelsActions.loadHotelsSuccess({ hotels })
         ),
-        catchError((error: string) =>
-          of(HotelsActions.loadHotelsFailure({ error }))
-        )
+        catchError((error) => {
+          console.error('Error loading hotels:', error);
+          return of(HotelsActions.loadHotelsFailure({ error: error.message || 'An error occurred while loading hotels' }));
+        })
       );
     })
   ));
-
 }

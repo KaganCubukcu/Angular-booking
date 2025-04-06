@@ -23,5 +23,17 @@ export const AuthReducer = createReducer(
   on(AuthActions.signUpSuccess, (state, action) => ({
     ...state,
     signUpUser: action.signUpUser,
+  })),
+  on(AuthActions.logout, (state) => ({
+    ...state,
+    loggedInUser: null,
+  })),
+  on(AuthActions.logoutSuccess, (state) => ({
+    ...state,
+    loggedInUser: null,
+  })),
+  on(AuthActions.logoutFailure, (state, action) => ({
+    ...state,
+    error: action.error,
   }))
 );

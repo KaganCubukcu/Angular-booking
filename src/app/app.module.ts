@@ -22,6 +22,7 @@ import { PaymentComponent } from './pages/payment/payment.component';
 import { SuccessPageComponent } from './pages/payment/success-page/success-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChangelogComponent } from './features/changelog/changelog.component';
+import { BookingModule } from './features/booking/booking.module';
 
 @NgModule({
   declarations: [
@@ -53,8 +54,9 @@ import { ChangelogComponent } from './features/changelog/changelog.component';
     NgbModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    BookingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
