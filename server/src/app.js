@@ -3,6 +3,7 @@ const { connectDB } = require('./config/database');
 const userRoutes = require('./routes/userRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const hotelRoutes = require('./routes/hotelRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 const errorHandler = require('./middleware/errorHandler');
 const corsMiddleware = require('./middleware/corsMiddleware');
 const { Hotel } = require('./models/Hotel.model');
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/user', userRoutes);
 app.use('/payment', paymentRoutes);
 app.use('/hotels', hotelRoutes);
+app.use('/admin', adminRoutes);
 
 app.get('/', (req, res) => {
   res.send('Server is running');

@@ -9,6 +9,7 @@ import { HotelDetailsComponent } from './pages/hotel-details/hotel-details.compo
 import { PaymentComponent } from './pages/payment/payment.component';
 import { SuccessPageComponent } from './pages/payment/success-page/success-page.component';
 import { ChangelogComponent } from './features/changelog/changelog.component';
+import { AdminGuard } from './core/guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -27,7 +28,6 @@ const routes: Routes = [
     path: 'sign-up',
     component: SignUpComponent,
   },
-
   {
     path: 'account',
     component: AccountComponent,
@@ -48,6 +48,11 @@ const routes: Routes = [
     path: 'changelog',
     component: ChangelogComponent,
   },
+  {
+    path: 'admin',
+    loadChildren: () => import('./features/admin/admin.module').then(m => m.AdminModule),
+    canActivate: [AdminGuard]
+  },
 ];
 
 @NgModule({
@@ -59,4 +64,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

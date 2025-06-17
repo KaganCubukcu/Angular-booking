@@ -5,7 +5,7 @@ const auth = async (req, res, next) => {
   try {
     const token = req.header('Authorization').replace('Bearer ', '');
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findOne({ _id: decoded._id }).select('_id name');
+    const user = await User.findOne({ _id: decoded._id }).select('_id firstName lastName email isAdmin');
 
     if (!user) {
       throw new Error();
@@ -19,4 +19,16 @@ const auth = async (req, res, next) => {
   }
 };
 
-module.exports = auth;
+// Middleware to check if user is admin
+const isAdmin = async (req, res, next) => {
+  try {
+    if (!req.user || !req.user.isAdmin) {
+      return res.status(403).send({ error: 'Access denied. Admin privileges required.' });
+    }
+    next();
+  } catch (error) {
+    res.status(500).send({ error: 'Server error', details: error.message });
+  }
+};
+
+module.exports = { auth, isAdmin };

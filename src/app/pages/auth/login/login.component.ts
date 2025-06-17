@@ -1,47 +1,82 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import * as AuthActions from '../../../features/auth/store/auth.actions';
 import * as AuthSelectors from '../../../features/auth/store/auth.selectors';
 import { AppStateInterface } from '../../../core/models/app-state.model';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
+  loginError: string | null = null;
+  private destroy$ = new Subject<void>();
+  public router: Router;
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly store: Store<AppStateInterface>,
-    private readonly router: Router
+    router: Router,
+    private readonly authService: AuthService
   ) {
+    this.router = router;
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     });
   }
 
-  ngOnInit() {
-    this.store.select(AuthSelectors.loggedInUserSelector).subscribe((loggedInUser) => {
-      if (loggedInUser) this.router.navigate(['/']);
-    });
+    ngOnInit() {
+    // Check if already logged in
+    this.authService.currentUser$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(user => {
+        if (user) {
+          this.router.navigate(['/']);
+        }
+      });
+
+    // Also keep the store subscription for backward compatibility
+    this.store.select(AuthSelectors.loggedInUserSelector)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((loggedInUser) => {
+        if (loggedInUser && loggedInUser.length > 0) {
+          this.router.navigate(['/']);
+        }
+      });
   }
 
   onSubmit() {
+    if (this.loginForm.invalid) {
+      return;
+    }
+
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
-    this.store.select(AuthSelectors.loggedInUserSelector).subscribe((loggedInUser) => {
-      if (!loggedInUser) {
-        this.loginForm.get('errorMessage')?.setValue('Invalid Email or Password');
-      } else {
-        this.loginForm.get('errorMessage')?.setValue('');
-      }
-    });
 
-    this.store.dispatch(AuthActions.login({ email, password }));
+    this.loginError = null;
+
+    // Use AuthService directly for more reliable authentication
+    this.authService.login(email, password)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/']);
+        },
+        error: (err) => {
+          console.error('Login error:', err);
+          this.loginError = 'Invalid email or password. Please try again.';
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

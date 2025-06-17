@@ -9,7 +9,7 @@
     <li class="company-name">
       <h3 routerLink="/">Bookify</h3>
     </li>
-    <li class="button-section" *ngIf="!(loggedInUser$ | async); else loggedInTrue">
+    <li class="button-section" *ngIf="(currentUser$ | async) === null">
       <button class="changelog-button" routerLink="/changelog">
         <img src="assets/icons/changelog.svg" alt="changelog" class="changelog-icon" />
         Changelog
@@ -18,33 +18,36 @@
       <button class="sign-up-button" routerLink="/sign-up">Sign Up</button>
     </li>
 
-    <ng-template #loggedInTrue>
-      <li class="logged-in-container">
-        <button class="changelog-button" routerLink="/changelog">
-          <img src="assets/icons/changelog.svg" alt="changelog" class="changelog-icon" />
-          Changelog
+    <li class="logged-in-container" *ngIf="(currentUser$ | async) !== null">
+      <button class="changelog-button" routerLink="/changelog">
+        <img src="assets/icons/changelog.svg" alt="changelog" class="changelog-icon" />
+        Changelog
+      </button>
+      <button class="favorites-button" routerLink="/favorites">
+        <i class="bi bi-heart"></i>
+        <span class="user-favourites">Favourites</span>
+      </button>
+      <button *ngIf="isAdmin" class="admin-button" routerLink="/admin">
+        <i class="bi bi-shield-lock"></i>
+        <span class="admin-text">Admin</span>
+      </button>
+      <div class="user-profile-section">
+        <span class="user-avatar" routerLink="/account">{{ firstName | logo }}</span>
+        <span class="user-name" routerLink="/account">
+          {{ firstName }}
+        </span>
+        <button (click)="toggleMenu()" class="menu-toggle-button">
+          <i class="bi bi-caret-down-fill"></i>
         </button>
-        <button class="favorites-button" routerLink="/favorites">
-          <i class="bi bi-heart"></i>
-          <span class="user-favourites">Favourites</span>
-        </button>
-        <div class="user-profile-section">
-          <span class="user-avatar" routerLink="/account">{{ firstName | logo }}</span>
-          <span class="user-name" routerLink="/account">
-            {{ firstName }}
-          </span>
-          <button (click)="toggleMenu()" class="menu-toggle-button">
-            <i class="bi bi-caret-down-fill"></i>
-          </button>
-          <div *ngIf="menuActive" class="user-menu">
-            <ul>
-              <li routerLink="/account">My Account</li>
-              <li routerLink="/account">Settings</li>
-              <li (click)="logout()">Logout</li>
-            </ul>
-          </div>
+        <div *ngIf="menuActive" class="user-menu">
+          <ul>
+            <li routerLink="/account">My Account</li>
+            <li routerLink="/account">Settings</li>
+            <li *ngIf="isAdmin" routerLink="/admin">Admin Dashboard</li>
+            <li tabindex="0" (click)="logout()" (keydown.enter)="logout()" (keydown.space)="logout()">Logout</li>
+          </ul>
         </div>
-      </li>
-    </ng-template>
+      </div>
+    </li>
   </ul>
 </nav>

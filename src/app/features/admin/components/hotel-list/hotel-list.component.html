@@ -1,0 +1,49 @@
+<div class="hotel-list-container">
+    <div class="list-header">
+        <h2>Hotel Management</h2>
+        <button class="add-button" (click)="addNewHotel()">Add New Hotel</button>
+    </div>
+
+    <div *ngIf="loading" class="loading">
+        <p>Loading hotels...</p>
+    </div>
+
+    <div *ngIf="error" class="error-message">
+        <p>{{ error }}</p>
+        <button (click)="loadHotels()">Try Again</button>
+    </div>
+
+    <div *ngIf="!loading && !error && hotels.length === 0" class="empty-state">
+        <p>No hotels found. Add a new hotel to get started.</p>
+    </div>
+
+    <table *ngIf="!loading && !error && hotels.length > 0" class="hotel-table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Location</th>
+                <th>Rating</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let hotel of hotels">
+                <td>
+                    <img *ngIf="hotel.photos && hotel.photos.length" [src]="hotel.photos[0]" alt="{{ hotel.name }}"
+                        class="hotel-thumbnail">
+                    <span *ngIf="!hotel.photos || !hotel.photos.length" class="no-image">No Image</span>
+                </td>
+                <td>{{ hotel.name }}</td>
+                <td>${{ hotel.nightlyPrice }}</td>
+                <td>{{ hotel.address.city }}, {{ hotel.address.country }}</td>
+                <td>{{ hotel.rating }} ★</td>
+                <td class="actions">
+                    <button class="edit-button" (click)="editHotel(hotel._id!)">Edit</button>
+                    <button class="delete-button" (click)="deleteHotel(hotel._id!)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

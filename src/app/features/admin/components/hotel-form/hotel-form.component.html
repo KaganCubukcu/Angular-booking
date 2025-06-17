@@ -1,0 +1,228 @@
+<div class="hotel-form-container">
+    <h2>{{ isEditMode ? 'Edit Hotel' : 'Add New Hotel' }}</h2>
+
+    <div *ngIf="loading" class="loading">
+        <p>Loading...</p>
+    </div>
+
+    <div *ngIf="error" class="error-message">
+        <p>{{ error }}</p>
+    </div>
+
+    <div *ngIf="success" class="success-message">
+        <p>{{ success }}</p>
+    </div>
+
+    <form [formGroup]="hotelForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+        <div class="form-section">
+            <h3>Basic Information</h3>
+
+            <div class="form-group">
+                <label for="name">Hotel Name *</label>
+                <input type="text" id="name" formControlName="name">
+                <div class="validation-error" *ngIf="hotelForm.get('name')?.invalid && hotelForm.get('name')?.touched">
+                    Hotel name is required (minimum 3 characters)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="nightlyPrice">Nightly Price ($) *</label>
+                <input type="number" id="nightlyPrice" formControlName="nightlyPrice">
+                <div class="validation-error"
+                    *ngIf="hotelForm.get('nightlyPrice')?.invalid && hotelForm.get('nightlyPrice')?.touched">
+                    Valid price is required
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="cardBackground">Card Background Image URL *</label>
+                <input type="text" id="cardBackground" formControlName="cardBackground">
+                <div class="validation-error"
+                    *ngIf="hotelForm.get('cardBackground')?.invalid && hotelForm.get('cardBackground')?.touched">
+                    Card background URL is required
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="rating">Rating (0-5) *</label>
+                <input type="number" id="rating" formControlName="rating" min="0" max="5" step="0.1">
+                <div class="validation-error"
+                    *ngIf="hotelForm.get('rating')?.invalid && hotelForm.get('rating')?.touched">
+                    Rating must be between 0 and 5
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="accommodationType">Accommodation Type *</label>
+                <input type="text" id="accommodationType" formControlName="accommodationType">
+                <div class="validation-error"
+                    *ngIf="hotelForm.get('accommodationType')?.invalid && hotelForm.get('accommodationType')?.touched">
+                    Accommodation type is required
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section" formGroupName="address">
+            <h3>Address</h3>
+
+            <div class="form-group">
+                <label for="streetAddress">Street Address *</label>
+                <input type="text" id="streetAddress" formControlName="streetAddress">
+                <div class="validation-error"
+                    *ngIf="hotelForm.get('address.streetAddress')?.invalid && hotelForm.get('address.streetAddress')?.touched">
+                    Street address is required
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="city">City *</label>
+                <input type="text" id="city" formControlName="city">
+                <div class="validation-error"
+                    *ngIf="hotelForm.get('address.city')?.invalid && hotelForm.get('address.city')?.touched">
+                    City is required
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="state">State/Province *</label>
+                <input type="text" id="state" formControlName="state">
+                <div class="validation-error"
+                    *ngIf="hotelForm.get('address.state')?.invalid && hotelForm.get('address.state')?.touched">
+                    State/Province is required
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="country">Country *</label>
+                <input type="text" id="country" formControlName="country">
+                <div class="validation-error"
+                    *ngIf="hotelForm.get('address.country')?.invalid && hotelForm.get('address.country')?.touched">
+                    Country is required
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section" formGroupName="location">
+            <h3>Map Location</h3>
+
+            <div class="form-group">
+                <label for="lat">Latitude *</label>
+                <input type="number" id="lat" formControlName="lat" step="0.000001">
+                <div class="validation-error"
+                    *ngIf="hotelForm.get('location.lat')?.invalid && hotelForm.get('location.lat')?.touched">
+                    Latitude is required
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="lng">Longitude *</label>
+                <input type="number" id="lng" formControlName="lng" step="0.000001">
+                <div class="validation-error"
+                    *ngIf="hotelForm.get('location.lng')?.invalid && hotelForm.get('location.lng')?.touched">
+                    Longitude is required
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Overview</h3>
+            <div class="form-group">
+                <label for="overview">Hotel Overview *</label>
+                <textarea id="overview" formControlName="overview" rows="5"></textarea>
+                <div class="validation-error"
+                    *ngIf="hotelForm.get('overview')?.invalid && hotelForm.get('overview')?.touched">
+                    Overview is required (minimum 20 characters)
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Photos</h3>
+            <div formArrayName="photos">
+                <div *ngFor="let photo of photos.controls; let i = index" class="form-group">
+                    <div class="form-array-item">
+                        <label [for]="'photo-' + i">Photo URL {{i + 1}} *</label>
+                        <input type="text" [id]="'photo-' + i" [formControlName]="i">
+                        <button type="button" class="remove-btn" (click)="removePhoto(i)"
+                            [disabled]="photos.length <= 1">
+                            Remove
+                        </button>
+                    </div>
+                    <div class="validation-error" *ngIf="photos.controls[i].invalid && photos.controls[i].touched">
+                        Photo URL is required
+                    </div>
+                </div>
+                <button type="button" class="add-btn" (click)="addPhoto()">Add Photo</button>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Amenities</h3>
+            <div formArrayName="amenities">
+                <div *ngFor="let amenity of amenities.controls; let i = index" class="form-group">
+                    <div class="form-array-item">
+                        <label [for]="'amenity-' + i">Amenity {{i + 1}} *</label>
+                        <input type="text" [id]="'amenity-' + i" [formControlName]="i">
+                        <button type="button" class="remove-btn" (click)="removeAmenity(i)"
+                            [disabled]="amenities.length <= 1">
+                            Remove
+                        </button>
+                    </div>
+                    <div class="validation-error"
+                        *ngIf="amenities.controls[i].invalid && amenities.controls[i].touched">
+                        Amenity is required
+                    </div>
+                </div>
+                <button type="button" class="add-btn" (click)="addAmenity()">Add Amenity</button>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Rooms</h3>
+            <div formArrayName="rooms">
+                <div *ngFor="let room of rooms.controls; let i = index" [formGroupName]="i" class="room-item">
+                    <h4>Room {{i + 1}}</h4>
+
+                    <div class="form-group">
+                        <label [for]="'room-name-' + i">Room Name *</label>
+                        <input type="text" [id]="'room-name-' + i" formControlName="name">
+                        <div class="validation-error"
+                            *ngIf="rooms.at(i).get('name')?.invalid && rooms.at(i).get('name')?.touched">
+                            Room name is required
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label [for]="'room-description-' + i">Description *</label>
+                        <textarea [id]="'room-description-' + i" formControlName="description" rows="3"></textarea>
+                        <div class="validation-error"
+                            *ngIf="rooms.at(i).get('description')?.invalid && rooms.at(i).get('description')?.touched">
+                            Room description is required
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label [for]="'room-price-' + i">Price ($) *</label>
+                        <input type="number" [id]="'room-price-' + i" formControlName="price">
+                        <div class="validation-error"
+                            *ngIf="rooms.at(i).get('price')?.invalid && rooms.at(i).get('price')?.touched">
+                            Valid price is required
+                        </div>
+                    </div>
+
+                    <button type="button" class="remove-btn" (click)="removeRoom(i)" [disabled]="rooms.length <= 1">
+                        Remove Room
+                    </button>
+                </div>
+                <button type="button" class="add-btn" (click)="addRoom()">Add Room</button>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="button" class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+            <button type="submit" class="submit-btn" [disabled]="hotelForm.invalid">
+                {{ isEditMode ? 'Update Hotel' : 'Add Hotel' }}
+            </button>
+        </div>
+    </form>
+</div>

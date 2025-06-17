@@ -12,6 +12,7 @@
   align-items: center;
   width: 70%;
 }
+
 .login-form-container {
   width: 50%;
   height: 80%;
@@ -19,6 +20,7 @@
   justify-content: center;
   flex-direction: column;
 }
+
 .login-form {
   display: flex;
   flex-direction: column;
@@ -71,7 +73,7 @@
   justify-content: center;
 }
 
-.input-container > input {
+.input-container>input {
   background: #fff;
   border: 1px solid #79747e;
   border-radius: 4px;
@@ -129,7 +131,7 @@
   align-items: center;
 }
 
-p > a {
+p>a {
   color: #ff8682;
   text-decoration: none;
 }
@@ -137,21 +139,26 @@ p > a {
 .input-container input.invalid {
   border: 1px solid red;
 }
+
 .error-message {
   color: red;
 }
+
 .success-message {
   color: green;
 }
+
 .back-button {
   font-size: 24px;
   background-color: transparent;
   border: none;
   cursor: pointer;
 }
+
 .social-login {
   margin-top: 24px;
 }
+
 @media only screen and (max-width: 1199.98px) {
   .login-container {
     display: flex;
@@ -161,9 +168,11 @@ p > a {
     width: 100%;
     margin: 0 auto;
   }
+
   .login-image {
     display: none;
   }
+
   .input-container {
     display: flex;
     flex-direction: column;
@@ -174,6 +183,7 @@ p > a {
     margin-top: 35px;
     margin-bottom: 55px;
   }
+
   .button-container {
     display: flex;
     flex-direction: column;
@@ -183,10 +193,27 @@ p > a {
     width: 350px;
     height: auto;
   }
+
   .password-section {
     width: 350px;
     display: flex;
     justify-content: space-between;
     margin-top: 25px;
   }
+}
+
+.validation-error {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+.login-error {
+  background-color: #ffebee;
+  color: #e74c3c;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  text-align: center;
 }

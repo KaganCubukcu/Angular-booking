@@ -1,12 +1,23 @@
 <div class="login-container">
   <div class="login-wrapper">
     <div class="login-form-container">
+
       <h1 class="login-title">Login</h1>
       <p class="login-description">Login to access your Bookify account</p>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
         <div class="login-form-inputs">
           <input type="email" placeholder="e-mail" formControlName="email" class="login-input" />
+          <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="validation-error">
+            Please enter a valid email address
+          </div>
           <input type="password" placeholder="password" formControlName="password" class="login-input" />
+          <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+            class="validation-error">
+            Password is required
+          </div>
+        </div>
+        <div *ngIf="loginError" class="login-error">
+          {{ loginError }}
         </div>
         <div class="login-options">
           <label class="remember-me">
@@ -15,10 +26,10 @@
           </label>
           <a href="#" class="forgot-password"> Forgot Password? </a>
         </div>
-        <button type="submit" class="login-button">Login</button>
+        <button type="submit" class="login-button" [disabled]="loginForm.invalid">Login</button>
       </form>
       <p class="signup-prompt">
-        Don't have an account? <a href="#" routerLink="/sign-up" class="signup-link">Sign up</a>
+        Don't have an account? <a routerLink="/sign-up" class="signup-link">Sign up</a>
       </p>
       <div class="social-login">
         <app-social-buttons text="login"></app-social-buttons>

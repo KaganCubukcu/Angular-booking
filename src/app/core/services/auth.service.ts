@@ -1,30 +1,111 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AuthLoginModel, AuthSignupModel } from '../../features/auth/store/auth.model';
 import { HttpClient } from '@angular/common/http';
-// import { environment } from 'src/environments/environments.prod';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environments';
+import { AuthResponseModel, UserModel } from '../models/user.model';
+
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8000';
+  private apiUrl = environment.apiUrl;
+  private currentUserSubject = new BehaviorSubject<UserModel | null>(null);
+  private tokenKey = 'auth_token';
+  private userKey = 'current_user';
 
-  constructor(private readonly http: HttpClient) { }
-
-  login(email: string, password: string): Observable<AuthLoginModel> {
-    return this.http.post<AuthLoginModel>(`${this.apiUrl}/user/login`, {
-      email,
-      password,
-    });
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {
+    this.loadUserFromStorage();
   }
 
-  signUp(firstName: string, lastName: string, email: string, phoneNumber: number, password: string): Observable<AuthSignupModel> {
-    return this.http.post<AuthSignupModel>(`${this.apiUrl}/user/signup`, {
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      password,
-    });
+  get currentUser$(): Observable<UserModel | null> {
+    return this.currentUserSubject.asObservable();
+  }
+
+  get currentUserValue(): UserModel | null {
+    return this.currentUserSubject.value;
+  }
+
+  get isAdmin(): boolean {
+    return !!this.currentUserValue?.isAdmin;
+  }
+
+  get isLoggedIn(): boolean {
+    const token = localStorage.getItem(this.tokenKey);
+    const user = localStorage.getItem(this.userKey);
+    return !!(token && user && this.currentUserSubject.value);
+  }
+
+  get token(): string | null {
+    return localStorage.getItem(this.tokenKey);
+  }
+
+  login(email: string, password: string): Observable<AuthResponseModel> {
+    return this.http.post<AuthResponseModel>(`${this.apiUrl}/user/login`, { email, password })
+      .pipe(
+        tap(response => this.setSession(response))
+      );
+  }
+
+  signup(userData: {
+    firstName: string,
+    lastName: string,
+    email: string,
+    phoneNumber: string,
+    password: string
+  }): Observable<{ user: UserModel }> {
+    return this.http.post<{ user: UserModel }>(`${this.apiUrl}/user/signup`, userData);
+  }
+
+  logout(navigateToLogin = true): void {
+    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.userKey);
+    this.currentUserSubject.next(null);
+
+    // Sadece isteniyorsa yönlendir (varsayılan olarak true)
+    if (navigateToLogin) {
+      this.router.navigate(['/']);
+    }
+  }
+
+  refreshUserProfile(): Observable<{ user: UserModel }> {
+    return this.http.get<{ user: UserModel }>(`${this.apiUrl}/user/me`)
+      .pipe(
+        tap(response => {
+          const userData = response.user;
+          this.currentUserSubject.next(userData);
+          localStorage.setItem(this.userKey, JSON.stringify(userData));
+        })
+      );
+  }
+
+  private setSession(authResult: AuthResponseModel): void {
+    localStorage.setItem(this.tokenKey, authResult.token);
+    localStorage.setItem(this.userKey, JSON.stringify(authResult.user));
+    this.currentUserSubject.next(authResult.user);
+  }
+
+  private loadUserFromStorage(): void {
+    const token = localStorage.getItem(this.tokenKey);
+    const userJson = localStorage.getItem(this.userKey);
+
+    if (token && userJson) {
+      try {
+        const user = JSON.parse(userJson);
+        this.currentUserSubject.next(user);
+        console.log('User loaded from storage:', user);
+      } catch (error) {
+        console.error('Error parsing user from localStorage', error);
+        localStorage.removeItem(this.tokenKey);
+        localStorage.removeItem(this.userKey);
+        this.currentUserSubject.next(null);
+      }
+    } else {
+      this.currentUserSubject.next(null);
+      console.log('No user in storage');
+    }
   }
 }

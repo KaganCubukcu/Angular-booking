@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/app.js",
     "start": "node src/app.js",
-    "seed": "node src/scripts/seed-hotels.js"
+    "seed": "node src/scripts/seed-hotels.js",
+    "create-admin": "node src/scripts/create-admin.js"
   },
   "author": "",
   "license": "ISC",

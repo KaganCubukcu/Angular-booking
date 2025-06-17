@@ -1,0 +1,27 @@
+<div class="admin-dashboard">
+    <header class="admin-header">
+        <h1>Hotel Admin Dashboard</h1>
+        <div class="user-info">
+            <span>Logged in as: {{ authService.currentUserValue?.firstName }} {{ authService.currentUserValue?.lastName
+                }}</span>
+            <button (click)="authService.logout()" class="logout-btn">Logout</button>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <nav class="admin-sidebar">
+            <ul>
+                <li>
+                    <a routerLink="/admin/hotels" routerLinkActive="active">Hotels</a>
+                </li>
+                <li>
+                    <a routerLink="/admin/users" routerLinkActive="active">Users</a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="admin-content">
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+</div>

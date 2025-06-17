@@ -1,0 +1,45 @@
+<div class="user-list-container">
+    <h2>User Management</h2>
+
+    <div *ngIf="loading" class="loading">
+        <p>Loading users...</p>
+    </div>
+
+    <div *ngIf="error" class="error-message">
+        <p>{{ error }}</p>
+        <button (click)="loadUsers()">Try Again</button>
+    </div>
+
+    <div *ngIf="!loading && !error && users.length === 0" class="empty-state">
+        <p>No users found.</p>
+    </div>
+
+    <table *ngIf="!loading && !error && users.length > 0" class="user-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Admin Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td>{{ user.firstName }} {{ user.lastName }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.phoneNumber }}</td>
+                <td class="status">
+                    <span class="badge" [ngClass]="user.isAdmin ? 'admin' : 'user'">
+                        {{ user.isAdmin ? 'Admin' : 'User' }}
+                    </span>
+                </td>
+                <td class="actions">
+                    <button class="toggle-button" (click)="toggleAdminStatus(user._id)">
+                        {{ user.isAdmin ? 'Remove Admin' : 'Make Admin' }}
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

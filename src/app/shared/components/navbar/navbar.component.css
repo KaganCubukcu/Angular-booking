@@ -187,6 +187,38 @@
   height: 16px;
 }
 
+.admin-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-weight: 500;
+}
+
+.admin-button:hover {
+  background-color: #45a049;
+}
+
+.admin-button i {
+  font-size: 16px;
+}
+
+.admin-text {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .admin-text {
+    display: inline;
+  }
+}
+
 /* Responsive styles */
 @media only screen and (max-width: 768px) {
   .navbar-container {

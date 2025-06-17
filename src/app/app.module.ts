@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -23,6 +23,7 @@ import { SuccessPageComponent } from './pages/payment/success-page/success-page.
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChangelogComponent } from './features/changelog/changelog.component';
 import { BookingModule } from './features/booking/booking.module';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,9 @@ import { BookingModule } from './features/booking/booking.module';
     BrowserAnimationsModule,
     BookingModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
