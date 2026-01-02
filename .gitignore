@@ -11,6 +11,9 @@ yarn-error.log
 # Visual Studio Code
 .vscode/
 
+# Repo metadata
+.github/
+
 # Miscellaneous
 .angular
 /coverage

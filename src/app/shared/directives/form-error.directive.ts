@@ -1,15 +1,17 @@
-import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 
 @Directive({
   selector: '[appFormError]',
 })
-export class FormErrorDirective implements OnInit {
+export class FormErrorDirective implements OnInit, OnDestroy {
   @Input('appFormError') control!: AbstractControl | string;
   @Input() controlName!: string;
   @Input() form!: FormGroup;
 
   private errorSpan!: HTMLElement;
+  private unsubscribe$ = new Subject<void>();
 
   constructor(private el: ElementRef, private renderer: Renderer2) {
     this.errorSpan = this.renderer.createElement('span');
@@ -21,15 +23,15 @@ export class FormErrorDirective implements OnInit {
   ngOnInit() {
     const actualControl = typeof this.control === 'string' ? this.form.get(this.control) : this.control;
     if (actualControl) {
-      this.form.statusChanges.subscribe(() => {
+      this.form.statusChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
         this.updateErrorMessage(actualControl);
       });
 
-      actualControl.statusChanges.subscribe(() => {
+      actualControl.statusChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
         this.updateErrorMessage(actualControl);
       });
 
-      actualControl.valueChanges.subscribe(() => {
+      actualControl.valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
         this.updateErrorMessage(actualControl);
       });
     }
@@ -72,5 +74,10 @@ export class FormErrorDirective implements OnInit {
     if (this.el.nativeElement.nextSibling === this.errorSpan) {
       this.renderer.removeChild(this.el.nativeElement.parentNode, this.errorSpan);
     }
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

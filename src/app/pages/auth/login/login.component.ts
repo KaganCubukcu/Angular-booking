@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import * as AuthSelectors from '../../../features/auth/store/auth.selectors';
 import { AppStateInterface } from '../../../core/models/app-state.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 
@@ -15,6 +15,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   loginError: string | null = null;
+  infoMessage: string | null = null;
   private destroy$ = new Subject<void>();
   public router: Router;
 
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private readonly fb: FormBuilder,
     private readonly store: Store<AppStateInterface>,
     router: Router,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly route: ActivatedRoute
   ) {
     this.router = router;
     this.loginForm = this.fb.group({
@@ -32,6 +34,15 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
     ngOnInit() {
+    // Check for session expired parameter
+    this.route.queryParams
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params => {
+        if (params['sessionExpired'] === 'true') {
+          this.infoMessage = 'Your session has expired. Please login again.';
+        }
+      });
+
     // Check if already logged in
     this.authService.currentUser$
       .pipe(takeUntil(this.destroy$))

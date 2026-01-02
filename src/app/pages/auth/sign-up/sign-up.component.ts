@@ -1,27 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as AuthActions from '../../../features/auth/store/auth.actions';
 import * as AuthSelectors from '../../../features/auth/store/auth.selectors';
 import { AppStateInterface } from '../../../core/models/app-state.model';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent implements OnInit, OnDestroy {
   signUpForm!: FormGroup;
+  private unsubscribe$ = new Subject<void>();
 
   constructor(private readonly fb: FormBuilder, private readonly store: Store<AppStateInterface>, private readonly router: Router) {}
 
   ngOnInit() {
-    this.store.select(AuthSelectors.signUpUserSelector).subscribe((signUpUser) => {
-      if (signUpUser) {
-        this.router.navigate(['/login']);
-      }
-    });
+    this.store
+      .select(AuthSelectors.signUpUserSelector)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((signUpUser) => {
+        if (signUpUser) {
+          this.router.navigate(['/login']);
+        }
+      });
     this.signUpForm = this.fb.group(
       {
         firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10), Validators.pattern('^[a-zA-Z]*$')]],
@@ -59,5 +64,10 @@ export class SignUpComponent implements OnInit {
       phoneNumber = '0' + phoneNumber;
     }
     this.signUpForm.get('phoneNumber')?.setValue(phoneNumber);
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

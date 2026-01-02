@@ -36,77 +36,71 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(
-    private readonly store: Store<AppStateInterface>,
-    private readonly http: HttpClient,
-    private readonly dataService: DataService
-  ) { }
+  constructor(private readonly store: Store<AppStateInterface>, private readonly http: HttpClient, private readonly dataService: DataService) {}
 
   stripeKey = environment.stripeKey;
 
   ngOnInit() {
     // Get booking details from store
-    this.bookingDetails$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(bookingDetails => {
-        if (bookingDetails) {
-          // Set room details
-          this.room = {
-            name: bookingDetails.roomName,
-            price: bookingDetails.roomPrice,
-            description: bookingDetails.roomDescription,
-          };
+    this.bookingDetails$.pipe(takeUntil(this.unsubscribe$)).subscribe((bookingDetails) => {
+      if (bookingDetails) {
+        // Set room details
+        this.room = {
+          name: bookingDetails.roomName,
+          price: bookingDetails.roomPrice,
+          description: bookingDetails.roomDescription,
+        };
 
-          // Set booking dates
-          this.checkInDate = bookingDetails.checkInDate;
-          this.checkOutDate = bookingDetails.checkOutDate;
-          this.numberOfGuests = bookingDetails.numberOfGuests;
+        // Set booking dates
+        this.checkInDate = bookingDetails.checkInDate;
+        this.checkOutDate = bookingDetails.checkOutDate;
+        this.numberOfGuests = bookingDetails.numberOfGuests;
 
-          // Fetch hotel information using DataService
-          this.loading = true;
-          this.dataService.getHotelByName(bookingDetails.hotelName)
-            .pipe(takeUntil(this.unsubscribe$))
-            .subscribe({
-              next: (hotel) => {
-                this.hotel = hotel;
-                this.loading = false;
-                this.calculateTotalPrice();
-              },
-              error: (err) => {
-                console.error('Error fetching hotel data:', err);
-                this.error = 'Failed to load hotel information';
-                this.loading = false;
+        // Fetch hotel information using DataService
+        this.loading = true;
+        this.dataService
+          .getHotelByName(bookingDetails.hotelName)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe({
+            next: (hotel) => {
+              this.hotel = hotel;
+              this.loading = false;
+              this.calculateTotalPrice();
+            },
+            error: (err) => {
+              console.error('Error fetching hotel data:', err);
+              this.error = 'Failed to load hotel information';
+              this.loading = false;
 
-                // Try fetching from all hotels
-                this.dataService.getHotels()
-                  .pipe(takeUntil(this.unsubscribe$))
-                  .subscribe({
-                    next: (hotels) => {
-                      this.hotel = hotels.find(h => h.name === bookingDetails.hotelName);
-                      if (this.hotel) {
-                        this.error = null;
-                      }
-                      this.calculateTotalPrice();
-                    },
-                    error: (err) => {
-                      console.error('Error fetching all hotels:', err);
+              // Try fetching from all hotels
+              this.dataService
+                .getHotels()
+                .pipe(takeUntil(this.unsubscribe$))
+                .subscribe({
+                  next: (hotels) => {
+                    this.hotel = hotels.find((h) => h.name === bookingDetails.hotelName);
+                    if (this.hotel) {
+                      this.error = null;
                     }
-                  });
-              }
-            });
-        } else {
-          console.error('No booking details found in store');
-        }
-      });
+                    this.calculateTotalPrice();
+                  },
+                  error: (err) => {
+                    console.error('Error fetching all hotels:', err);
+                  },
+                });
+            },
+          });
+      } else {
+        console.error('No booking details found in store');
+      }
+    });
 
-    this.loggedInUser$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(loggedInUser => {
-        if (loggedInUser && loggedInUser.length > 0) {
-          this.firstName = loggedInUser[0].user.firstName;
-          this.lastName = loggedInUser[0].user.lastName;
-        }
-      });
+    this.loggedInUser$.pipe(takeUntil(this.unsubscribe$)).subscribe((loggedInUser) => {
+      if (loggedInUser && loggedInUser.length > 0) {
+        this.firstName = loggedInUser[0].user.firstName;
+        this.lastName = loggedInUser[0].user.lastName;
+      }
+    });
   }
 
   calculateTotalPrice() {
@@ -151,6 +145,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
         numberOfGuests: this.numberOfGuests,
         numberOfDays: this.numberOfDays,
       })
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(async (res) => {
         const stripe = await loadStripe(this.stripeKey);
         stripe?.redirectToCheckout({

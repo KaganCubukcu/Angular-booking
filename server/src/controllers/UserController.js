@@ -52,7 +52,14 @@ async function login(req, res) {
     if (!isPasswordMatch) {
       return res.status(400).send({ error: 'Invalid email or password' });
     }
-    const token = jwt.sign({ _id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET);
+    
+    // Generate JWT token with expiry (7 days)
+    const token = jwt.sign(
+      { _id: user._id, isAdmin: user.isAdmin },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' } // Token expires in 7 days
+    );
+    
     res.send({ user, token });
   } catch (error) {
     res.status(400).send(error);

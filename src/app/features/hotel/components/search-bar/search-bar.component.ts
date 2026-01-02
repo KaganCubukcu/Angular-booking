@@ -1,4 +1,4 @@
-import { Component, TemplateRef, OnInit, HostListener, ElementRef } from '@angular/core';
+import { Component, TemplateRef, OnInit, HostListener, ElementRef, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { select, Store } from '@ngrx/store';
@@ -20,7 +20,7 @@ interface GuestsData {
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.css'],
 })
-export class SearchBarComponent implements OnInit {
+export class SearchBarComponent implements OnInit, OnDestroy {
   today!: string;
   form: FormGroup;
   hotels$: Observable<HotelDataModel[]>;
@@ -56,10 +56,15 @@ export class SearchBarComponent implements OnInit {
       checkOutControl.setValidators(this.checkOutValidator.bind(this));
     }
     this.hotels$ = this.store.pipe(select(hotelsSelector));
-    this.hotels$.pipe(filter((hotels) => !!hotels)).subscribe((hotels) => {
-      this.hotelCountry = hotels.map((hotel) => hotel.address.country);
-      this.filteredHotels = hotels;
-    });
+    this.hotels$
+      .pipe(
+        filter((hotels) => !!hotels),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((hotels) => {
+        this.hotelCountry = hotels.map((hotel) => hotel.address.country);
+        this.filteredHotels = hotels;
+      });
   }
 
   ngOnInit() {
