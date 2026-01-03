@@ -1,6 +1,13 @@
 const { User } = require('../models/User.model');
 const jwt = require('jsonwebtoken');
 
+function stripPassword(userDoc) {
+  if (!userDoc) return userDoc;
+  const plain = typeof userDoc.toObject === 'function' ? userDoc.toObject() : userDoc;
+  const { password, ...rest } = plain;
+  return rest;
+}
+
 //Sign up user
 async function signUp(req, res) {
   try {
@@ -33,8 +40,7 @@ async function signUp(req, res) {
       // isAdmin is ignored here - it can only be set by admin users through a separate endpoint
     });
     await user.save();
-    const { password: _, ...userWithoutPassword } = user.toObject();
-    res.status(201).send({ user: userWithoutPassword });
+    res.status(201).send({ user: stripPassword(user) });
   } catch (error) {
     res.status(400).send({ error: 'User registration failed', details: error.message });
   }
@@ -52,15 +58,15 @@ async function login(req, res) {
     if (!isPasswordMatch) {
       return res.status(400).send({ error: 'Invalid email or password' });
     }
-    
+
     // Generate JWT token with expiry (7 days)
     const token = jwt.sign(
       { _id: user._id, isAdmin: user.isAdmin },
       process.env.JWT_SECRET,
       { expiresIn: '7d' } // Token expires in 7 days
     );
-    
-    res.send({ user, token });
+
+    res.send({ user: stripPassword(user), token });
   } catch (error) {
     res.status(400).send(error);
   }
@@ -74,11 +80,10 @@ async function getCurrentUser(req, res) {
       return res.status(404).send({ error: 'User not found' });
     }
 
-    const { password, ...userWithoutPassword } = user.toObject();
-    res.send({ user: userWithoutPassword });
+    res.send({ user: stripPassword(user) });
   } catch (error) {
     res.status(500).send({ error: 'Failed to get user profile', details: error.message });
   }
 }
 
-module.exports = { signUp, login, getCurrentUser };
+module.exports = { signUp, login, getCurrentUser, stripPassword };
