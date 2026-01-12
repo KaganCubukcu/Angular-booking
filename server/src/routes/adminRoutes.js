@@ -1,11 +1,12 @@
 const express = require('express');
 const {
-    getAllUsers,
-    toggleAdminStatus,
-    getAllHotelsAdmin,
-    addHotel,
-    updateHotel,
-    deleteHotel
+  getAllUsers,
+  toggleAdminStatus,
+  getAllHotelsAdmin,
+  getHotelById,
+  addHotel,
+  updateHotel,
+  deleteHotel,
 } = require('../controllers/AdminController');
 const { auth, isAdmin } = require('../middleware/auth');
 
@@ -20,6 +21,7 @@ router.patch('/users/:userId/toggle-admin', toggleAdminStatus);
 
 // Hotel management routes
 router.get('/hotels', getAllHotelsAdmin);
+router.get('/hotels/:hotelId', getHotelById);
 router.post('/hotels', addHotel);
 router.put('/hotels/:hotelId', updateHotel);
 router.delete('/hotels/:hotelId', deleteHotel);

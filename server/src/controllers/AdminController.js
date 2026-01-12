@@ -134,6 +134,25 @@ async function getAllHotelsAdmin(req, res) {
   }
 }
 
+// Get hotel by ID (for admin panel)
+async function getHotelById(req, res) {
+  try {
+    const { hotelId } = req.params;
+    ensureValidObjectId(hotelId, 'hotelId');
+
+    const hotel = await Hotel.findById(hotelId);
+    if (!hotel) {
+      return res.status(404).json({ error: 'Hotel not found' });
+    }
+
+    res.status(200).json(hotel);
+  } catch (error) {
+    console.error('Error fetching hotel:', error);
+    const status = error.message.includes('Invalid hotelId format') ? 400 : 500;
+    res.status(status).json({ error: 'Failed to fetch hotel', details: error.message });
+  }
+}
+
 // Add new hotel
 async function addHotel(req, res) {
   try {
@@ -226,6 +245,7 @@ module.exports = {
   getAllUsers,
   toggleAdminStatus,
   getAllHotelsAdmin,
+  getHotelById,
   addHotel,
   updateHotel,
   deleteHotel,
