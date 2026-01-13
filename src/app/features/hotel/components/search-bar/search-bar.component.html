@@ -3,13 +3,8 @@
     <!-- Location Input -->
     <div class="search-section">
       <p class="section-title">Location</p>
-      <input
-        formControlName="destination"
-        type="text"
-        placeholder="Search destinations"
-        (focus)="toggleDestinationSuggestions($event)"
-        (input)="searchHotels($event)"
-      />
+      <input formControlName="destination" type="text" placeholder="Search destinations"
+        (focus)="toggleDestinationSuggestions($event)" (input)="searchHotels($event)" />
     </div>
 
     <!-- Divider -->
@@ -18,12 +13,7 @@
     <!-- Check-in -->
     <div class="search-section">
       <p class="section-title">Check-in Date</p>
-      <input
-        formControlName="checkIn"
-        type="date"
-        [min]="today"
-        (change)="onDateChange('checkIn')"
-      />
+      <input formControlName="checkIn" type="date" [min]="today" (change)="onDateChange('checkIn')" />
     </div>
 
     <!-- Divider -->
@@ -32,12 +22,8 @@
     <!-- Check-out -->
     <div class="search-section">
       <p class="section-title">Check-out Date</p>
-      <input
-        formControlName="checkOut"
-        type="date"
-        [min]="form.get('checkIn')?.value || today"
-        (change)="onDateChange('checkOut')"
-      />
+      <input formControlName="checkOut" type="date" [min]="form.get('checkIn')?.value || today"
+        (change)="onDateChange('checkOut')" />
     </div>
 
     <!-- Divider -->
@@ -46,22 +32,12 @@
     <!-- Guests -->
     <div class="search-section">
       <p class="section-title">Guests</p>
-      <input
-        formControlName="roomsGuests"
-        type="text"
-        readonly
-        (click)="openGuestsModal(guestsModal)"
-      />
+      <input formControlName="roomsGuests" type="text" readonly (click)="openGuestsModal(guestsModal)" />
     </div>
 
     <!-- Search Button -->
     <div class="search-button-container">
-      <button
-        type="submit"
-        class="search-button"
-        [disabled]="!form.valid"
-        (click)="submit()"
-      >
+      <button type="submit" class="search-button" [disabled]="!form.valid" (click)="submit()">
         <span class="search-icon">Search</span>
       </button>
     </div>
@@ -71,12 +47,7 @@
 <ng-template #guestsModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Guests and Rooms</h4>
-    <button
-      type="button"
-      class="close"
-      aria-label="Close"
-      (click)="modal.dismiss('Cross click')"
-    >
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -89,27 +60,18 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-outline-dark"
-      (click)="modal.close('Save click')"
-    >
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">
       Save
     </button>
   </div>
 </ng-template>
 
 <!-- Destination Suggestions -->
-<div
-  class="destination-suggestions-container"
-  *ngIf="showDestinationSuggestions"
->
+<div class="destination-suggestions-container" *ngIf="showDestinationSuggestions">
   <div class="destination-suggestions">
-    <div
-      *ngFor="let hotel of filteredHotels"
-      (click)="selectDestination(hotel.address.country)"
-      class="destination-suggestion-item"
-    >
+    <div *ngFor="let hotel of filteredHotels" (click)="selectDestination(hotel.address.country)"
+      (keyup.enter)="selectDestination(hotel.address.country)" class="destination-suggestion-item" tabindex="0"
+      role="button">
       {{ hotel.address.country }}
     </div>
   </div>

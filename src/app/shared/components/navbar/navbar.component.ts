@@ -12,7 +12,7 @@ import { UserModel } from 'src/app/core/models/user.model';
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.css'],
-    standalone: false
+    
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   loggedInUser$ = this.store.select(loggedInUserSelector);

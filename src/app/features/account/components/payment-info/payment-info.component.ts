@@ -39,6 +39,6 @@ import { Component } from '@angular/core';
     <!-- Template End -->
   `,
     styleUrls: ['./payment-info.component.css'],
-    standalone: false
+    
 })
 export class PaymentInfoComponent {}

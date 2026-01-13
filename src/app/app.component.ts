@@ -10,7 +10,7 @@ import { Store } from '@ngrx/store';
     <app-footer></app-footer>
   `,
     styleUrls: ['./app.component.css'],
-    standalone: false
+    
 })
 export class AppComponent implements OnInit {
   constructor(private readonly store: Store) {}

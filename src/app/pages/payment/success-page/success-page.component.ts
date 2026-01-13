@@ -23,7 +23,7 @@ import { Router } from '@angular/router';
     <!-- Template End -->
   `,
     styleUrls: ['./success-page.component.css'],
-    standalone: false
+    
 })
 export class SuccessPageComponent implements OnInit {
   constructor(private router: Router) {}

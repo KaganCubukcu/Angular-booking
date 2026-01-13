@@ -15,7 +15,7 @@ import slugify from 'slugify';
     selector: 'app-content',
     templateUrl: './content.component.html',
     styleUrls: ['./content.component.css'],
-    standalone: false
+    
 })
 export class ContentComponent {
   isLoading$: Observable<boolean>;

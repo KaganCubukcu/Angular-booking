@@ -16,15 +16,15 @@
         </div>
     </div>
     <div class="account-sections">
-        <section class="account-section-title" (click)="activeTab = 'account'">
+        <section class="account-section-title" (click)="activeTab = 'account'" (keyup.enter)="activeTab = 'account'" tabindex="0" role="button">
             Account
         </section>
         <hr />
-        <section class="account-section-title" (click)="activeTab = 'booking'">
+        <section class="account-section-title" (click)="activeTab = 'booking'" (keyup.enter)="activeTab = 'booking'" tabindex="0" role="button">
             Bookings
         </section>
         <hr />
-        <section class="account-section-title" (click)="activeTab = 'payment'">
+        <section class="account-section-title" (click)="activeTab = 'payment'" (keyup.enter)="activeTab = 'payment'" tabindex="0" role="button">
             Payment methods
         </section>
         <hr />

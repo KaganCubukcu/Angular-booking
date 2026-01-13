@@ -11,6 +11,6 @@ import { Component } from '@angular/core';
     <!-- Template End -->
   `,
     styleUrls: ['./account.component.css'],
-    standalone: false
+    
 })
 export class AccountComponent {}

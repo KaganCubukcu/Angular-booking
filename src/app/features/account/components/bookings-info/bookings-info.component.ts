@@ -69,6 +69,6 @@ import { Component } from '@angular/core';
     <!-- Template End -->
   `,
     styleUrls: ['./bookings-info.component.css'],
-    standalone: false
+    
 })
 export class BookingsInfoComponent {}

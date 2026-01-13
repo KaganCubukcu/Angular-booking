@@ -4,7 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 
 @Directive({
     selector: '[appFormError]',
-    standalone: false
+    
 })
 export class FormErrorDirective implements OnInit, OnDestroy {
   @Input('appFormError') control!: AbstractControl | string;

@@ -11,15 +11,13 @@ import slugify from 'slugify';
 import { updateSearchBar } from '../../store/search/search.action';
 import { ChangeDetectorRef } from '@angular/core';
 
-interface GuestsData {
-  [key: string]: number;
-}
+type GuestsData = Record<string, number>;
 
 @Component({
-    selector: 'app-search-bar',
-    templateUrl: './search-bar.component.html',
-    styleUrls: ['./search-bar.component.css'],
-    standalone: false
+  selector: 'app-search-bar',
+  templateUrl: './search-bar.component.html',
+  styleUrls: ['./search-bar.component.css'],
+
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
   today!: string;
@@ -109,18 +107,18 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     return this.form.get('checkOut');
   }
 
-  openModal(content: NgbModalRef | TemplateRef<any>) {
+  openModal(content: NgbModalRef | TemplateRef<unknown>) {
     this.modalService.open(content);
   }
 
-  openGuestsModal(content: TemplateRef<any>) {
+  openGuestsModal(content: TemplateRef<unknown>) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   roomsGuestsValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
     if (value) {
-      const [rooms, adults, children] = value.split(',').map((val: any) => parseInt(val));
+      const [rooms, adults, children] = value.split(',').map((val: string) => parseInt(val));
       if (rooms > 0 && adults > 0 && children >= 0) {
         return null;
       }

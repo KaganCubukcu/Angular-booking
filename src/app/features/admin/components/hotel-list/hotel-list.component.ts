@@ -9,7 +9,7 @@ import { HotelDataModel } from 'src/app/features/hotel/store/hotel.model';
     selector: 'app-hotel-list',
     templateUrl: './hotel-list.component.html',
     styleUrls: ['./hotel-list.component.css'],
-    standalone: false
+    
 })
 export class HotelListComponent implements OnInit, OnDestroy {
   hotels: HotelDataModel[] = [];

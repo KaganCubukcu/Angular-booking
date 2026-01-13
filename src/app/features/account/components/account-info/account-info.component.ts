@@ -14,7 +14,7 @@ interface LoggedInUser {
     selector: 'app-account-info',
     templateUrl: './account-info.component.html',
     styleUrls: ['./account-info.component.css'],
-    standalone: false
+    
 })
 export class AccountInfoComponent implements OnInit {
   @Input() loggedInUser!: LoggedInUser[];
@@ -41,8 +41,6 @@ export class AccountInfoComponent implements OnInit {
       button: 'Change',
     },
   ];
-
-  constructor() {}
 
   ngOnInit(): void {
     if (this.loggedInUser) {

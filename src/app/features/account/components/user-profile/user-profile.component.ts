@@ -10,7 +10,7 @@ import { loggedInUserSelector } from 'src/app/features/auth/store/auth.selectors
     selector: 'app-user-profile',
     templateUrl: './user-profile.component.html',
     styleUrls: ['./user-profile.component.css'],
-    standalone: false
+    
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
   loggedInUser$!: Observable<AuthLoginModel[]>;

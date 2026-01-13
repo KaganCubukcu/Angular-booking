@@ -2,10 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HotelDataModel } from '../../store/hotel.model';
 
 @Component({
-    selector: 'app-card',
-    templateUrl: './card.component.html',
-    styleUrls: ['./card.component.css'],
-    standalone: false
+  selector: 'app-card',
+  templateUrl: './card.component.html',
+  styleUrls: ['./card.component.css'],
+
 })
 export class CardComponent implements OnInit {
   @Input() hotel!: HotelDataModel;
@@ -13,9 +13,7 @@ export class CardComponent implements OnInit {
 
   hotelBackgroundPhoto?: string;
 
-  constructor() {}
-
-  ngOnInit(): void {  
+  ngOnInit(): void {
     this.hotelBackgroundPhoto = this.hotel?.cardBackground;
   }
 

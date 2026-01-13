@@ -17,7 +17,7 @@ interface FiltersCardData {
     selector: 'app-filters-card',
     templateUrl: './filters-card.component.html',
     styleUrls: ['./filters-card.component.css'],
-    standalone: false
+    
 })
 export class FiltersCardComponent implements OnInit, OnDestroy {
   @Input() data!: FiltersCardData;

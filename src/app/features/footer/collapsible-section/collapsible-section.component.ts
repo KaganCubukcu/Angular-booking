@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
     selector: 'app-collapsible-section',
     templateUrl: './collapsible-section.component.html',
     styleUrls: ['./collapsible-section.component.css'],
-    standalone: false
+    
 })
 export class CollapsibleSectionComponent {
   @Input() title!: string;

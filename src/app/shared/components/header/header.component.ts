@@ -4,11 +4,11 @@ import { Component } from '@angular/core';
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.css'],
-    standalone: false
+    
 })
 
 export class HeaderComponent {
-  headerTitle: string = 'Explore, Dream, Discover';
-  headerSubTitle: string = 'LIVE & TRAVEL';
-  headerDescription: string = 'Special offers to suit your plan';
+  headerTitle = 'Explore, Dream, Discover';
+  headerSubTitle = 'LIVE & TRAVEL';
+  headerDescription = 'Special offers to suit your plan';
 }

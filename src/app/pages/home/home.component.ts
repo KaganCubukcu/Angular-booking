@@ -10,6 +10,6 @@ import { Component } from '@angular/core';
     </div>
   `,
     styleUrls: ['./home.component.css'],
-    standalone: false
+    
 })
 export class HomeComponent {}

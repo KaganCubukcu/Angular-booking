@@ -12,6 +12,6 @@ import { Component } from '@angular/core';
     </form>
   </div>`,
     styleUrls: ['./hotels-filters.component.css'],
-    standalone: false
+    
 })
 export class HotelsFiltersComponent {}

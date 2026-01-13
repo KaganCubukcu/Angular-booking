@@ -7,69 +7,39 @@
     <section class="input-container">
       <div class="form-row">
         <div class="input-container">
-          <input
-            type="text"
-            placeholder="First Name"
-            formControlName="firstName"
-            [appFormError]="'firstName'"
-            [form]="signUpForm"
-            controlName="First Name"
-          />
+          <input type="text" placeholder="First Name" formControlName="firstName" [appFormError]="'firstName'"
+            [form]="signUpForm" controlName="First Name" />
         </div>
         <div class="input-container">
-          <input
-            type="text"
-            placeholder="Last Name"
-            formControlName="lastName"
-            [appFormError]="'lastName'"
-            [form]="signUpForm"
-            controlName="Last Name"
-          />
+          <input type="text" placeholder="Last Name" formControlName="lastName" [appFormError]="'lastName'"
+            [form]="signUpForm" controlName="Last Name" />
         </div>
       </div>
       <div class="form-row">
         <div class="input-container">
-          <input type="email" placeholder="Email" formControlName="email" [appFormError]="'email'" [form]="signUpForm" controlName="Email" />
+          <input type="email" placeholder="Email" formControlName="email" [appFormError]="'email'" [form]="signUpForm"
+            controlName="Email" />
         </div>
         <div class="input-container">
-          <input
-            type="tel"
-            placeholder="Phone Number"
-            formControlName="phoneNumber"
-            (keyup)="formatPhoneNumber()"
-            [appFormError]="'phoneNumber'"
-            [form]="signUpForm"
-            controlName="Phone Number"
-          />
+          <input type="tel" placeholder="Phone Number" formControlName="phoneNumber" (keyup)="formatPhoneNumber()"
+            [appFormError]="'phoneNumber'" [form]="signUpForm" controlName="Phone Number" />
         </div>
       </div>
       <div class="form-col">
         <div class="input-container">
-          <input
-            type="password"
-            placeholder="Password"
-            formControlName="password"
-            [appFormError]="'password'"
-            [form]="signUpForm"
-            controlName="Password"
-          />
+          <input type="password" placeholder="Password" formControlName="password" [appFormError]="'password'"
+            [form]="signUpForm" controlName="Password" />
         </div>
         <div class="input-container">
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            formControlName="confirmPassword"
-            [appFormError]="'confirmPassword'"
-            [form]="signUpForm"
-            controlName="Confirm Password"
-          />
+          <input type="password" placeholder="Confirm Password" formControlName="confirmPassword"
+            [appFormError]="'confirmPassword'" [form]="signUpForm" controlName="Confirm Password" />
         </div>
       </div>
     </section>
 
     <section class="terms">
-      <input type="checkbox" />
-      <label>I agree to all <span>Terms </span>and <span> Privacy Policies </span></label>
+      <input type="checkbox" id="terms-checkbox" />
+      <label for="terms-checkbox">I agree to all <span>Terms </span>and <span> Privacy Policies </span></label>
     </section>
 
     <section class="button-container">

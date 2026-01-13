@@ -3,10 +3,10 @@ import { DatePipe } from '@angular/common';
 
 @Pipe({
     name: 'dateFormat',
-    standalone: false
+    
 })
 export class DateFormatPipe implements PipeTransform {
-  transform(value: string | Date, format: string = 'MM/dd/yyyy'): string {
+  transform(value: string | Date, format = 'MM/dd/yyyy'): string {
     if (!value) return '';
 
     const datePipe = new DatePipe('en-US');

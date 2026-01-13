@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
     name: 'logo',
-    standalone: false
+    
 })
 export class LogoPipe implements PipeTransform {
   transform(value: string) {

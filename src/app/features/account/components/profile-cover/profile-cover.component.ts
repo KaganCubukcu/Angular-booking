@@ -19,6 +19,6 @@ import { Component } from '@angular/core';
     <!-- Template End -->
   `,
     styleUrls: ['./profile-cover.component.css'],
-    standalone: false
+    
 })
 export class ProfileCoverComponent {}

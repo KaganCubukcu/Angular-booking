@@ -11,7 +11,7 @@ import { Subject, takeUntil } from 'rxjs';
     selector: 'app-sign-up',
     templateUrl: './sign-up.component.html',
     styleUrls: ['./sign-up.component.css'],
-    standalone: false
+    
 })
 export class SignUpComponent implements OnInit, OnDestroy {
   signUpForm!: FormGroup;

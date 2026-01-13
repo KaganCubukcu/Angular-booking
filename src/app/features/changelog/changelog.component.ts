@@ -6,7 +6,7 @@ import { ChangelogService } from 'src/app/core/services/changelog.service';
     selector: 'app-changelog',
     templateUrl: './changelog.component.html',
     styleUrls: ['./changelog.component.css'],
-    standalone: false
+    
 })
 export class ChangelogComponent implements OnInit {
   changelog: Changelog[] = [];

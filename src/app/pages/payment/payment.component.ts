@@ -15,7 +15,7 @@ import { DataService } from 'src/app/core/services/data.service';
     selector: 'app-payment',
     templateUrl: './payment.component.html',
     styleUrls: ['./payment.component.css'],
-    standalone: false
+    
 })
 export class PaymentComponent implements OnInit, OnDestroy {
   room: { name: string; price: number; description: string } | undefined;
