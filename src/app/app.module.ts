@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -26,42 +26,36 @@ import { BookingModule } from './features/booking/booking.module';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    HotelListingComponent,
-    LoginComponent,
-    SignUpComponent,
-    AccountComponent,
-    HotelDetailsComponent,
-    PaymentComponent,
-    SuccessPageComponent,
-    ChangelogComponent,
-  ],
-  imports: [
-    AccountModule,
-    AuthModule,
-    SharedModule,
-    HotelModule,
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    StoreModule.forRoot({}, {}),
-    EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25,
-      logOnly: !isDevMode(),
-    }),
-    NgbModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    BookingModule,
-  ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
-  ],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HomeComponent,
+        HotelListingComponent,
+        LoginComponent,
+        SignUpComponent,
+        AccountComponent,
+        HotelDetailsComponent,
+        PaymentComponent,
+        SuccessPageComponent,
+        ChangelogComponent,
+    ],
+    bootstrap: [AppComponent], imports: [AccountModule,
+        AuthModule,
+        SharedModule,
+        HotelModule,
+        BrowserModule,
+        AppRoutingModule,
+        StoreModule.forRoot({}, {}),
+        EffectsModule.forRoot([]),
+        StoreDevtoolsModule.instrument({
+            maxAge: 25,
+            logOnly: !isDevMode(),
+        }),
+        NgbModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        BookingModule], providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }
