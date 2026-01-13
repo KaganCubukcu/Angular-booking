@@ -9,7 +9,7 @@
             "src": "package.json",
             "use": "@vercel/static-build",
             "config": {
-                "distDir": "dist/mean-stack-ngrx-angular-booking"
+                "distDir": "dist/angular-booking"
             }
         }
     ],
