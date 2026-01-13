@@ -8,6 +8,12 @@ import { ActionReducer, StoreModule } from '@ngrx/store';
 import { AuthReducer } from './store/auth.reducers';
 import { localStorageSync } from 'ngrx-store-localstorage';
 import { AuthStateInterface } from 'src/app/core/models/auth-state.model';
+import { AuthRoutingModule } from './auth-routing.module';
+import { LoginComponent } from '../../pages/auth/login/login.component';
+import { SignUpComponent } from '../../pages/auth/sign-up/sign-up.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+
+
 
 export function localStorageSyncAuthReducer(
   reducer: ActionReducer<AuthStateInterface>
@@ -19,11 +25,13 @@ export function localStorageSyncAuthReducer(
 }
 
 @NgModule({
-  declarations: [SocialButtonsComponent],
+  declarations: [SocialButtonsComponent, LoginComponent, SignUpComponent],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
+    AuthRoutingModule,
     EffectsModule.forFeature([AuthEffects]),
     StoreModule.forFeature('auth', AuthReducer, {
       metaReducers: [localStorageSyncAuthReducer],
@@ -31,4 +39,4 @@ export function localStorageSyncAuthReducer(
   ],
   exports: [SocialButtonsComponent],
 })
-export class AuthModule {}
+export class AuthModule { }

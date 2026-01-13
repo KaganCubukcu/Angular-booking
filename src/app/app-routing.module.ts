@@ -1,52 +1,27 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { HotelListingComponent } from './pages/hotel-listing/hotel-listing.component';
-import { LoginComponent } from './pages/auth/login/login.component';
-import { SignUpComponent } from './pages/auth/sign-up/sign-up.component';
-import { AccountComponent } from './pages/account/account.component';
-import { HotelDetailsComponent } from './pages/hotel-details/hotel-details.component';
-import { PaymentComponent } from './pages/payment/payment.component';
-import { SuccessPageComponent } from './pages/payment/success-page/success-page.component';
-import { ChangelogComponent } from './features/changelog/changelog.component';
 import { AdminGuard } from './core/guards/admin.guard';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    loadChildren: () => import('./features/hotel/hotel.module').then(m => m.HotelModule),
   },
   {
-    path: 'hotel-listing',
-    component: HotelListingComponent,
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-  },
-  {
-    path: 'sign-up',
-    component: SignUpComponent,
+    path: '',
+    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule),
   },
   {
     path: 'account',
-    component: AccountComponent,
-  },
-  {
-    path: 'hotel-listing/:name',
-    component: HotelDetailsComponent,
+    loadChildren: () => import('./features/account/account.module').then(m => m.AccountModule),
   },
   {
     path: 'payment',
-    component: PaymentComponent,
-  },
-  {
-    path: 'success',
-    component: SuccessPageComponent,
+    loadChildren: () => import('./features/payment/payment.module').then(m => m.PaymentModule),
   },
   {
     path: 'changelog',
-    component: ChangelogComponent,
+    loadChildren: () => import('./features/changelog/changelog.module').then(m => m.ChangelogModule),
   },
   {
     path: 'admin',

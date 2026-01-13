@@ -6,6 +6,9 @@ import { AccountInfoComponent } from './components/account-info/account-info.com
 import { BookingsInfoComponent } from './components/bookings-info/bookings-info.component';
 import { PaymentInfoComponent } from './components/payment-info/payment-info.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { AccountRoutingModule } from './account-routing.module';
+import { AccountComponent } from '../../pages/account/account.component';
+
 @NgModule({
   declarations: [
     ProfileCoverComponent,
@@ -13,8 +16,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     AccountInfoComponent,
     BookingsInfoComponent,
     PaymentInfoComponent,
+    AccountComponent,
   ],
-  imports: [CommonModule, SharedModule],
+  imports: [CommonModule, SharedModule, AccountRoutingModule],
   exports: [ProfileCoverComponent, UserProfileComponent],
 })
-export class AccountModule {}
+export class AccountModule { }
