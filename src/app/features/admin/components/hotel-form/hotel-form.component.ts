@@ -6,10 +6,10 @@ import { AdminService } from 'src/app/core/services/admin.service';
 import { HotelDataModel } from 'src/app/features/hotel/store/hotel.model';
 
 @Component({
-    selector: 'app-hotel-form',
-    templateUrl: './hotel-form.component.html',
-    styleUrls: ['./hotel-form.component.css'],
-    
+  selector: 'app-hotel-form',
+  templateUrl: './hotel-form.component.html',
+  styleUrls: ['./hotel-form.component.css'],
+  standalone: false
 })
 export class HotelFormComponent implements OnInit, OnDestroy {
   hotelForm: FormGroup;

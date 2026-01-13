@@ -8,16 +8,16 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-    selector: 'app-sign-up',
-    templateUrl: './sign-up.component.html',
-    styleUrls: ['./sign-up.component.css'],
-    
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.css'],
+  standalone: false
 })
 export class SignUpComponent implements OnInit, OnDestroy {
   signUpForm!: FormGroup;
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private readonly fb: FormBuilder, private readonly store: Store<AppStateInterface>, private readonly router: Router) {}
+  constructor(private readonly fb: FormBuilder, private readonly store: Store<AppStateInterface>, private readonly router: Router) { }
 
   ngOnInit() {
     this.store

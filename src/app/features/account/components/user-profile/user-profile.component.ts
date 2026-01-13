@@ -7,10 +7,10 @@ import { AuthLoginModel } from 'src/app/features/auth/store/auth.model';
 import { loggedInUserSelector } from 'src/app/features/auth/store/auth.selectors';
 
 @Component({
-    selector: 'app-user-profile',
-    templateUrl: './user-profile.component.html',
-    styleUrls: ['./user-profile.component.css'],
-    
+  selector: 'app-user-profile',
+  templateUrl: './user-profile.component.html',
+  styleUrls: ['./user-profile.component.css'],
+  standalone: false
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
   loggedInUser$!: Observable<AuthLoginModel[]>;
@@ -21,7 +21,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   unsubscribe$ = new Subject<void>();
 
-  constructor(private readonly store: Store<AppStateInterface>, private readonly router: Router) {}
+  constructor(private readonly store: Store<AppStateInterface>, private readonly router: Router) { }
 
   ngOnInit(): void {
     this.loggedInUser$ = this.store.select(loggedInUserSelector).pipe(map(user => user || []),
@@ -36,12 +36,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         console.error(new Error('Logged in user not found'));
       }
     });
-}
+  }
 
   get loggedInUser(): AuthLoginModel[] {
     let userArray: AuthLoginModel[] = [];
     this.loggedInUser$.subscribe(users => userArray = users);
-    return userArray; 
+    return userArray;
   }
 
   logout(): void {

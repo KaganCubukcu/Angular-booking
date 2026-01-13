@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-bookings-info',
-    template: `
+  selector: 'app-bookings-info',
+  template: `
     <!-- Template Start -->
     <div class="booking-container">
       <div class="booking-header">
@@ -68,7 +68,8 @@ import { Component } from '@angular/core';
     </div>
     <!-- Template End -->
   `,
-    styleUrls: ['./bookings-info.component.css'],
-    
+  styleUrls: ['./bookings-info.component.css'],
+  standalone: false
+
 })
-export class BookingsInfoComponent {}
+export class BookingsInfoComponent { }

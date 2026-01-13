@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-payment-info',
-    template: `
+  selector: 'app-payment-info',
+  template: `
     <!-- Template Start -->
     <p class="payment-methods">Payment methods</p>
     <div class="payments-card-container">
@@ -38,7 +38,8 @@ import { Component } from '@angular/core';
 
     <!-- Template End -->
   `,
-    styleUrls: ['./payment-info.component.css'],
-    
+  styleUrls: ['./payment-info.component.css'],
+  standalone: false
+
 })
-export class PaymentInfoComponent {}
+export class PaymentInfoComponent { }

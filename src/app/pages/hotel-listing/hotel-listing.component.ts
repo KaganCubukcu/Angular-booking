@@ -16,10 +16,10 @@ interface HotelListingData {
 }
 
 @Component({
-    selector: 'app-hotel-listing',
-    templateUrl: './hotel-listing.component.html',
-    styleUrls: ['./hotel-listing.component.css'],
-    
+  selector: 'app-hotel-listing',
+  templateUrl: './hotel-listing.component.html',
+  styleUrls: ['./hotel-listing.component.css'],
+  standalone: false
 })
 
 export class HotelListingComponent implements OnInit, OnDestroy {
@@ -34,8 +34,8 @@ export class HotelListingComponent implements OnInit, OnDestroy {
   };
 
   unsubscribe$ = new Subject<void>();
-  
-  constructor(private readonly store: Store<AppStateInterface>) {}
+
+  constructor(private readonly store: Store<AppStateInterface>) { }
 
   ngOnInit() {
     this.data.hotels$.pipe(
@@ -56,7 +56,7 @@ export class HotelListingComponent implements OnInit, OnDestroy {
       };
     });
   }
-  
+
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();

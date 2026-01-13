@@ -11,10 +11,10 @@ import { DataService } from 'src/app/core/services/data.service';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-    selector: 'app-hotel-details',
-    templateUrl: './hotel-details.component.html',
-    styleUrls: ['./hotel-details.component.css'],
-    
+  selector: 'app-hotel-details',
+  templateUrl: './hotel-details.component.html',
+  styleUrls: ['./hotel-details.component.css'],
+  standalone: false
 })
 export class HotelDetailsComponent implements OnInit, OnDestroy {
   @ViewChild('roomsHeader') roomsHeader!: ElementRef;

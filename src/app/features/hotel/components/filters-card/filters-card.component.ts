@@ -14,10 +14,10 @@ interface FiltersCardData {
 }
 
 @Component({
-    selector: 'app-filters-card',
-    templateUrl: './filters-card.component.html',
-    styleUrls: ['./filters-card.component.css'],
-    
+  selector: 'app-filters-card',
+  templateUrl: './filters-card.component.html',
+  styleUrls: ['./filters-card.component.css'],
+  standalone: false
 })
 export class FiltersCardComponent implements OnInit, OnDestroy {
   @Input() data!: FiltersCardData;
@@ -28,7 +28,7 @@ export class FiltersCardComponent implements OnInit, OnDestroy {
   constructor(
     private readonly router: Router,
     private readonly route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.data.hotels$

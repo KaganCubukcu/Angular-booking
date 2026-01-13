@@ -5,10 +5,10 @@ import { AdminService } from 'src/app/core/services/admin.service';
 import { UserModel } from 'src/app/core/models/user.model';
 
 @Component({
-    selector: 'app-user-list',
-    templateUrl: './user-list.component.html',
-    styleUrls: ['./user-list.component.css'],
-    
+  selector: 'app-user-list',
+  templateUrl: './user-list.component.html',
+  styleUrls: ['./user-list.component.css'],
+  standalone: false
 })
 export class UserListComponent implements OnInit, OnDestroy {
   users: UserModel[] = [];
@@ -19,7 +19,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   total = 0;
   private destroy$ = new Subject<void>();
 
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService) { }
 
   ngOnInit(): void {
     this.loadUsers();

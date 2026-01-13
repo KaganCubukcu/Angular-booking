@@ -12,10 +12,10 @@ import { Router } from '@angular/router';
 import slugify from 'slugify';
 
 @Component({
-    selector: 'app-content',
-    templateUrl: './content.component.html',
-    styleUrls: ['./content.component.css'],
-    
+  selector: 'app-content',
+  templateUrl: './content.component.html',
+  styleUrls: ['./content.component.css'],
+  standalone: false
 })
 export class ContentComponent {
   isLoading$: Observable<boolean>;
