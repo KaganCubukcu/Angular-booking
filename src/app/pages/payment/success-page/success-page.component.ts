@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-success-page',
-  template: `
+    selector: 'app-success-page',
+    template: `
     <!-- Template Start -->
     <div class="container">
       <div class="success">
@@ -22,7 +22,8 @@ import { Router } from '@angular/router';
 
     <!-- Template End -->
   `,
-  styleUrls: ['./success-page.component.css'],
+    styleUrls: ['./success-page.component.css'],
+    standalone: false
 })
 export class SuccessPageComponent implements OnInit {
   constructor(private router: Router) {}

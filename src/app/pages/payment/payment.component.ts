@@ -12,9 +12,10 @@ import * as BookingActions from 'src/app/features/booking/store/booking.actions'
 import { DataService } from 'src/app/core/services/data.service';
 
 @Component({
-  selector: 'app-payment',
-  templateUrl: './payment.component.html',
-  styleUrls: ['./payment.component.css'],
+    selector: 'app-payment',
+    templateUrl: './payment.component.html',
+    styleUrls: ['./payment.component.css'],
+    standalone: false
 })
 export class PaymentComponent implements OnInit, OnDestroy {
   room: { name: string; price: number; description: string } | undefined;

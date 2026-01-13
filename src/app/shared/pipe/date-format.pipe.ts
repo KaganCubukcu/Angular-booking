@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 @Pipe({
-  name: 'dateFormat',
+    name: 'dateFormat',
+    standalone: false
 })
 export class DateFormatPipe implements PipeTransform {
   transform(value: string | Date, format: string = 'MM/dd/yyyy'): string {

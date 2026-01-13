@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-hotels-filters',
-  template: ` <div class="hotels-filter-container">
+    selector: 'app-hotels-filters',
+    template: ` <div class="hotels-filter-container">
     <form>
       <h3>Filters</h3>
       <div>
@@ -11,6 +11,7 @@ import { Component } from '@angular/core';
       </div>
     </form>
   </div>`,
-  styleUrls: ['./hotels-filters.component.css'],
+    styleUrls: ['./hotels-filters.component.css'],
+    standalone: false
 })
 export class HotelsFiltersComponent {}

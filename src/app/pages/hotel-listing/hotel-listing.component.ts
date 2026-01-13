@@ -16,9 +16,10 @@ interface HotelListingData {
 }
 
 @Component({
-  selector: 'app-hotel-listing',
-  templateUrl: './hotel-listing.component.html',
-  styleUrls: ['./hotel-listing.component.css'],
+    selector: 'app-hotel-listing',
+    templateUrl: './hotel-listing.component.html',
+    styleUrls: ['./hotel-listing.component.css'],
+    standalone: false
 })
 
 export class HotelListingComponent implements OnInit, OnDestroy {

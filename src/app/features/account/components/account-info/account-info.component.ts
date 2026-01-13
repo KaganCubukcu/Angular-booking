@@ -11,9 +11,10 @@ interface LoggedInUser {
 }
 
 @Component({
-  selector: 'app-account-info',
-  templateUrl: './account-info.component.html',
-  styleUrls: ['./account-info.component.css'],
+    selector: 'app-account-info',
+    templateUrl: './account-info.component.html',
+    styleUrls: ['./account-info.component.css'],
+    standalone: false
 })
 export class AccountInfoComponent implements OnInit {
   @Input() loggedInUser!: LoggedInUser[];

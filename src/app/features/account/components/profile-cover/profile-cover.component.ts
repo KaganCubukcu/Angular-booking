@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-profile-cover',
-  template: `
+    selector: 'app-profile-cover',
+    template: `
     <!-- Template Start -->
     <div class="cover-container">
       <img
@@ -18,6 +18,7 @@ import { Component } from '@angular/core';
     </div>
     <!-- Template End -->
   `,
-  styleUrls: ['./profile-cover.component.css'],
+    styleUrls: ['./profile-cover.component.css'],
+    standalone: false
 })
 export class ProfileCoverComponent {}

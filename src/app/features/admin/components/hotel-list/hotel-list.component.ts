@@ -6,9 +6,10 @@ import { AdminService } from 'src/app/core/services/admin.service';
 import { HotelDataModel } from 'src/app/features/hotel/store/hotel.model';
 
 @Component({
-  selector: 'app-hotel-list',
-  templateUrl: './hotel-list.component.html',
-  styleUrls: ['./hotel-list.component.css'],
+    selector: 'app-hotel-list',
+    templateUrl: './hotel-list.component.html',
+    styleUrls: ['./hotel-list.component.css'],
+    standalone: false
 })
 export class HotelListComponent implements OnInit, OnDestroy {
   hotels: HotelDataModel[] = [];

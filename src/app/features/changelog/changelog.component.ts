@@ -3,9 +3,10 @@ import { Changelog } from './models/Changelog.model';
 import { ChangelogService } from 'src/app/core/services/changelog.service';
 
 @Component({
-  selector: 'app-changelog',
-  templateUrl: './changelog.component.html',
-  styleUrls: ['./changelog.component.css'],
+    selector: 'app-changelog',
+    templateUrl: './changelog.component.html',
+    styleUrls: ['./changelog.component.css'],
+    standalone: false
 })
 export class ChangelogComponent implements OnInit {
   changelog: Changelog[] = [];

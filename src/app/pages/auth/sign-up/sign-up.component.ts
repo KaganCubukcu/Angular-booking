@@ -8,9 +8,10 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'app-sign-up',
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css'],
+    selector: 'app-sign-up',
+    templateUrl: './sign-up.component.html',
+    styleUrls: ['./sign-up.component.css'],
+    standalone: false
 })
 export class SignUpComponent implements OnInit, OnDestroy {
   signUpForm!: FormGroup;
