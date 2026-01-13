@@ -24,7 +24,7 @@ export class DataService {
     );
   }
 
-  getHotelByName(name: string): Observable<HotelDataModel> {
+  getHotelByName(name: string): Observable<HotelDataModel | null> {
     return this.http.get<HotelDataModel>(`${this.apiUrl}/hotels/name/${name}`).pipe(
       catchError(error => {
         console.warn(`Error fetching hotel "${name}" from API, falling back to static data:`, error);
@@ -39,7 +39,7 @@ export class DataService {
           }),
           catchError(() => {
             console.error(`Failed to find hotel "${name}" in fallback data`);
-            return of({} as HotelDataModel);
+            return of(null);
           })
         );
       })

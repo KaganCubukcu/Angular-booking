@@ -19,7 +19,7 @@ import { DataService } from 'src/app/core/services/data.service';
 })
 export class PaymentComponent implements OnInit, OnDestroy {
   room: { name: string; price: number; description: string } | undefined;
-  hotel: HotelDataModel | undefined;
+  hotel: HotelDataModel | null | undefined;
   firstName = '';
   lastName = '';
   discount = 0;

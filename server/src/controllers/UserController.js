@@ -28,16 +28,17 @@ async function signUp(req, res) {
       return res.status(400).send({ error: 'Password must be at least 6 characters' });
     }
 
-    // Create new user with default isAdmin = false
-    // Note: isAdmin can only be set by another admin, which will be controlled
-    // through middleware in admin routes
+    // Check if this is the first user
+    const userCount = await User.countDocuments();
+
+    // Create new user
     const user = new User({
       firstName,
       lastName,
       email,
       phoneNumber,
       password,
-      // isAdmin is ignored here - it can only be set by admin users through a separate endpoint
+      isAdmin: userCount === 0 // First user is admin
     });
     await user.save();
     res.status(201).send({ user: stripPassword(user) });

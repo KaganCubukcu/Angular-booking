@@ -19,7 +19,7 @@ import { Subject, takeUntil } from 'rxjs';
 export class HotelDetailsComponent implements OnInit, OnDestroy {
   @ViewChild('roomsHeader') roomsHeader!: ElementRef;
 
-  hotel: HotelDataModel | undefined;
+  hotel: HotelDataModel | null | undefined;
   categories: string[] = [];
   currentImageIndex = 0;
   bookingForm: FormGroup;
@@ -56,7 +56,7 @@ export class HotelDetailsComponent implements OnInit, OnDestroy {
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: (hotel) => {
-              if (hotel) {
+              if (hotel && hotel.name) {
                 this.hotel = hotel;
                 this.categories = hotel.amenities || [];
                 this.setupSelectedRoom();

@@ -43,7 +43,19 @@ async function getHotelById(req, res) {
 // Get hotel by name (for slug-based routing)
 async function getHotelByName(req, res) {
     try {
-        const hotel = await Hotel.findOne({ name: req.params.name });
+        const hotelName = req.params.name;
+
+        // Try exact match first
+        let hotel = await Hotel.findOne({ name: hotelName });
+
+        // If not found, try matching slugified version (hyphens instead of spaces)
+        if (!hotel) {
+            const nameWithSpaces = hotelName.replace(/-/g, ' ');
+            hotel = await Hotel.findOne({
+                name: { $regex: new RegExp('^' + nameWithSpaces.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '$', 'i') }
+            });
+        }
+
         if (!hotel) {
             return res.status(404).json({ error: 'Hotel not found' });
         }

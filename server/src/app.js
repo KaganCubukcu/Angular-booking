@@ -37,7 +37,7 @@ async function checkAndSeedHotels() {
     if (count === 0) {
       console.log('No hotels found in database. Seeding from JSON file...');
       try {
-        const filePath = path.join(__dirname, '../../..', 'src/assets/data.json');
+        const filePath = path.join(__dirname, '../../', 'src/assets/data.json');
         const data = await fs.readFile(filePath, 'utf8');
         const hotels = JSON.parse(data);
         await Hotel.insertMany(hotels);
