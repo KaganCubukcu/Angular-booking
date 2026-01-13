@@ -10,12 +10,12 @@ export class ChangelogService {
       version: '3.0.0',
       date: '2026-01-13',
       changes: [
-        'Angular sürümü v15\'ten v19\'a yükseltildi',
-        'Tüm çekirdek bağımlılıklar (NgRx, ng-bootstrap, TypeScript, Zone.js) güncel sürümlere taşındı',
-        'Angular 19 modül uyumluluğu için tüm bileşenlere standalone: false desteği eklendi',
-        'Erişilebilirlik (Accessibility) iyileştirmeleri yapıldı (Klavye navigasyonu ve ekran okuyucu desteği)',
-        'Tüm lint hataları ve kod kalitesi sorunları giderildi',
-        'Form label uyumlulukları ve tip güvenliği (any tiplerinin temizlenmesi) sağlandı',
+        'Upgraded Angular from v15 to v19',
+        'Updated all core dependencies including NgRx, ng-bootstrap, TypeScript, and Zone.js',
+        'Added standalone: false to all components for Angular 19 module compatibility',
+        'Implemented accessibility (a11y) improvements including keyboard navigation support',
+        'Resolved all linting errors and improved overall code quality',
+        'Fixed form label associations and enhanced type safety by removing explicit "any" types',
       ],
     },
     {
