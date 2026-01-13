@@ -67,7 +67,8 @@
     <div class="card-container">
         <div class="card-hotel-card">
             <div class="card-hotel-image-info">
-                <img [src]="hotel!.photos[0]" alt="hotel-image" class="card-hotel-image" />
+                <img [src]="hotel?.photos?.[0] || '/assets/icons/hotel.svg'" alt="hotel-image"
+                    class="card-hotel-image" />
                 <div class="card-hotel-info">
                     <p class="card-hotel-name">{{ hotel?.name }}</p>
                     <p class="card-hotel-room-name">{{ room?.name }}</p>
@@ -83,16 +84,22 @@
                 <table>
                     <tbody>
                         <tr>
-                            <td>Base Fare</td>
-                            <td>{{ room?.price | currency }}</td>
+                            <td>
+                                Base Fare
+                                <small class="text-muted d-block" style="font-size: 0.75rem; color: #6c757d;">
+                                    ({{ room?.price | currency }} x {{ numberOfGuests }} guests x {{ numberOfDays }}
+                                    nights)
+                                </small>
+                            </td>
+                            <td>{{ baseFareTotal | currency }}</td>
                         </tr>
                         <tr>
                             <td>Discount</td>
                             <td>{{ discount | currency }}</td>
                         </tr>
                         <tr>
-                            <td>Taxes</td>
-                            <td>{{ tax | currency }}</td>
+                            <td>Taxes (18%)</td>
+                            <td>{{ taxAmount | currency }}</td>
                         </tr>
                         <tr>
                             <td>Service Fee</td>

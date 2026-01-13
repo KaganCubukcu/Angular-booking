@@ -10,6 +10,9 @@ import { selectBookingDetails } from 'src/app/features/booking/store/booking.sel
 import { Subject, takeUntil } from 'rxjs';
 import * as BookingActions from 'src/app/features/booking/store/booking.actions';
 import { DataService } from 'src/app/core/services/data.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { map } from 'rxjs';
+
 
 @Component({
   selector: 'app-payment',
@@ -26,7 +29,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
   tax = 0.18;
   serviceFee = 5;
   totalPrice = 0;
-  loggedInUser$ = this.store.select(loggedInUserSelector);
+  baseFareTotal = 0;
+  taxAmount = 0;
+  loggedInUser$ = this.authService.currentUser$;
   bookingDetails$ = this.store.select(selectBookingDetails);
   checkInDate = '';
   checkOutDate = '';
@@ -37,7 +42,12 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private readonly store: Store<AppStateInterface>, private readonly http: HttpClient, private readonly dataService: DataService) { }
+  constructor(
+    private readonly store: Store<AppStateInterface>,
+    private readonly http: HttpClient,
+    private readonly dataService: DataService,
+    private readonly authService: AuthService
+  ) { }
 
   stripeKey = environment.stripeKey;
 
@@ -97,9 +107,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
     });
 
     this.loggedInUser$.pipe(takeUntil(this.unsubscribe$)).subscribe((loggedInUser) => {
-      if (loggedInUser && loggedInUser.length > 0) {
-        this.firstName = loggedInUser[0].user.firstName;
-        this.lastName = loggedInUser[0].user.lastName;
+      if (loggedInUser) {
+        this.firstName = loggedInUser.firstName;
+        this.lastName = loggedInUser.lastName;
       }
     });
   }
@@ -118,9 +128,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
       }
 
       // Calculate total price
-      const basePrice = (this.room?.price || 0) * this.numberOfGuests * this.numberOfDays;
-      const taxAmount = basePrice * this.tax;
-      this.totalPrice = basePrice - this.discount + taxAmount + this.serviceFee;
+      this.baseFareTotal = (this.room?.price || 0) * this.numberOfGuests * this.numberOfDays;
+      this.taxAmount = this.baseFareTotal * this.tax;
+      this.totalPrice = this.baseFareTotal - this.discount + this.taxAmount + this.serviceFee;
     } catch (error) {
       console.error('Error calculating total price', error);
       // Fallback to base price if calculation fails

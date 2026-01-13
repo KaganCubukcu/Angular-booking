@@ -55,7 +55,7 @@
           </select>
         </div>
         <div class="form-footer">
-          <div class="price">{{ hotel.nightlyPrice | currency : 'USD' : 'symbol' : '1.0-0' }}<span>/night</span></div>
+          <div class="price">{{ selectedRoom?.price | currency : 'USD' : 'symbol' : '1.0-0' }}<span>/night</span></div>
           <button type="submit" [disabled]="!bookingForm.valid">Book Now</button>
         </div>
       </form>
