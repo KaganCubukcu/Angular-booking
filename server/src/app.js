@@ -54,21 +54,23 @@ async function checkAndSeedHotels() {
 }
 
 // Database connection and server start
-(async () => {
-  try {
-    // Connect to database
-    await connectDB();
+if (require.main === module) {
+  (async () => {
+    try {
+      // Connect to database
+      await connectDB();
 
-    // Check and seed hotels
-    await checkAndSeedHotels();
+      // Check and seed hotels
+      await checkAndSeedHotels();
 
-    // Start server
-    const port = process.env.PORT || 8000;
-    app.listen(port, () => console.log(`Server started on port ${port}`));
-  } catch (error) {
-    console.error('Failed to start server:', error);
-    process.exit(1);
-  }
-})();
+      // Start server
+      const port = process.env.PORT || 8000;
+      app.listen(port, () => console.log(`Server started on port ${port}`));
+    } catch (error) {
+      console.error('Failed to start server:', error);
+      process.exit(1);
+    }
+  })();
+}
 
 module.exports = app;
